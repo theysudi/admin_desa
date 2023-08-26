@@ -98,6 +98,8 @@ Route::middleware('auth:user')->group(function () {
         Route::post('/storesukettidakmampu', 'PengajuanController@storesukettidakmampu')->name('storesukettidakmampu');
         Route::get('/sukettidakmemilikitempattinggal/{id?}', 'PengajuanController@sukettidakmemilikitempattinggal')->name('sukettidakmemilikitempattinggal');
         Route::post('/storesukettidakmemilikitempattinggal', 'PengajuanController@storesukettidakmemilikitempattinggal')->name('storesukettidakmemilikitempattinggal');
+        Route::get('/sukettidakmemilikiketurunan/{id?}', 'PengajuanController@sukettidakmemilikiketurunan')->name('sukettidakmemilikiketurunan');
+        Route::post('/storesukettidakmemilikiketurunan', 'PengajuanController@storesukettidakmemilikiketurunan')->name('storesukettidakmemilikiketurunan');
     });
 
     Route::middleware(['can:Report'])->prefix('report')->name('report.')->group(function () {
@@ -119,5 +121,6 @@ Route::middleware('auth:user')->group(function () {
         Route::get('/suketdatatercecer/{id}', 'ReportController@suketdatatercecer')->name('suketdatatercecer');
         Route::get('/sukettidakmampu/{id}', 'ReportController@sukettidakmampu')->name('sukettidakmampu');
         Route::get('/sukettidakmemilikitempattinggal/{id}', 'ReportController@sukettidakmemilikitempattinggal')->name('sukettidakmemilikitempattinggal');
+        Route::get('/sukettidakmemilikiketurunan/{id}', 'ReportController@sukettidakmemilikiketurunan')->name('sukettidakmemilikiketurunan');
     });
 });

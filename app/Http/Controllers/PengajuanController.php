@@ -25,6 +25,7 @@ use App\Models\SuketPindahDomisili;
 use App\Models\SuketSudahMampu;
 use App\Models\SuketTempatUsaha;
 use App\Models\SuketTidakMampu;
+use App\Models\SuketTidakMemilikiKeturunan;
 use App\Models\SuketTidakMemilikiTempatTinggal;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
@@ -138,6 +139,8 @@ class PengajuanController extends Controller
           return '<a href="' . route('report.sukettidakmampu', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
         } elseif ($d->jenis_surat_id == 18) {
           return '<a href="' . route('report.sukettidakmemilikitempattinggal', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 19) {
+          return '<a href="' . route('report.sukettidakmemilikiketurunan', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
         }
       }
     })->toJson();
@@ -203,6 +206,8 @@ class PengajuanController extends Controller
       return view('masterpengajuan.sukettidakmampu',  ['data' => $data]);
     } elseif ($data->jenis_surat_id == 18) {
       return view('masterpengajuan.sukettidakmemilikitempattinggal',  ['data' => $data]);
+    } elseif ($data->jenis_surat_id == 19) {
+      return view('masterpengajuan.sukettidakmemilikiketurunan',  ['data' => $data]);
     }
   }
 
@@ -861,6 +866,47 @@ class PengajuanController extends Controller
         "agama" => $request->agama,
         "status_kawin" => $request->status_kawin,
         "alamat" => $request->alamat,
+        "deskripsi" => $request->deskripsi,
+        "pengajuan_id" => $request->id,
+        "penduduk_id" => $request->penduduk_id
+      ]);
+
+      Alert::toast('Data Berhasil Disimpan', 'success');
+    } catch (QueryException $e) {
+      Alert::toast('Data Gagal Disimpan' . ' ' . $e->errorInfo[2], 'error');
+    }
+    return redirect()->route('masterpengajuan.home');
+  }
+
+  // MILIK MENEMPATI TIDAK MEMILIKI KETURUNAN
+  public function sukettidakmemilikiketurunan($id)
+  {
+    $data = Pengajuan::with('jenis_surat', 'penduduk')->where('id', $id)->first();
+    return view('masterpengajuan.sukettidakmemilikiketurunan',  ['data' => $data]);
+  }
+
+  public function storesukettidakmemilikiketurunan(Request $request)
+  {
+    try {
+      Pengajuan::where('id', $request->id)->update([
+        "status" => 1
+      ]);
+      SuketTidakMemilikiKeturunan::where('pengajuan_id', $request->id)->delete();
+      SuketTidakMemilikiKeturunan::create([
+        "nomor_surat" => $request->nomor_surat,
+        "tanggal_surat" => $request->tanggal_surat,
+        "nama" => $request->nama,
+        "tempat_lahir" => $request->tempat_lahir,
+        "tgl_lahir" => $request->tgl_lahir,
+        "jenis_kelamin" => $request->jenis_kelamin,
+        "agama" => $request->agama,
+        "alamat" => $request->alamat,
+        "nama_pasangan" => $request->nama_pasangan,
+        "tempat_lahir_pasangan" => $request->tempat_lahir_pasangan,
+        "tgl_lahir_pasangan" => $request->tgl_lahir_pasangan,
+        "jenis_kelamin_pasangan" => $request->jenis_kelamin_pasangan,
+        "agama_pasangan" => $request->agama_pasangan,
+        "alamat_pasangan" => $request->alamat_pasangan,
         "deskripsi" => $request->deskripsi,
         "pengajuan_id" => $request->id,
         "penduduk_id" => $request->penduduk_id

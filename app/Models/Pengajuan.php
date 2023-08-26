@@ -105,4 +105,8 @@ class Pengajuan extends Model
   {
     return $this->belongsTo(SuketTidakMampu::class, 'pengajuan_id', 'id');
   }
+  public function sukettidakmemiliketurunan(): BelongsTo
+  {
+    return $this->belongsTo(SuketTidakMemilikiKeturunan::class, 'pengajuan_id', 'id');
+  }
 }
