@@ -29,6 +29,7 @@ use App\Models\SuketPindahDomisili;
 use App\Models\SuketSudahMampu;
 use App\Models\SuketTempatUsaha;
 use App\Models\SuketTidakMampu;
+use App\Models\SuketTidakMemilikiKeturunan;
 use App\Models\SuketTidakMemilikiTempatTinggal;
 use Illuminate\Support\Facades\Storage;
 
@@ -389,6 +390,30 @@ class ReportController extends Controller
 
     $pdf = PDF::loadView('report.sukettidakmemilikitempattinggal', [
       'data' => $data, 'hari' => $hari, 'bulan' => $bulan, 'tanggal' => $tanggal, 'tahun' => $tahun, 'bulanlahir' => $bulanlahir, 'tanggallahir' => $tanggallahir, 'tahunlahir' => $tahunlahir
+    ]);
+
+    return $pdf->stream('Surat Keterangan Tidak Mampu' . ' ' . '.pdf');
+  }
+
+  public function sukettidakmemilikiketurunan($id)
+  {
+    $setting = Setting::first();
+    $data = SuketTidakMemilikiKeturunan::where('pengajuan_id', $id)->first();
+    $hari = Carbon::parse($data->tanggal_surat)->locale('id')->isoFormat('dddd');
+    $bulan = Carbon::parse($data->tanggal_surat)->locale('id')->isoFormat('MMMM');
+    $tanggal = Carbon::parse($data->tanggal_surat)->format('d');
+    $tahun = Carbon::parse($data->tanggal_surat)->format('Y');
+    $bulanlahir = Carbon::parse($data->tgl_lahir)->locale('id')->isoFormat('MMMM');
+    $tanggallahir = Carbon::parse($data->tgl_lahir)->format('d');
+    $tahunlahir = Carbon::parse($data->tgl_lahir)->format('Y');
+    $bulanlahirpsg = Carbon::parse($data->tgl_lahir_pasangan)->locale('id')->isoFormat('MMMM');
+    $tanggallahirpsg = Carbon::parse($data->tgl_lahir_pasangan)->format('d');
+    $tahunlahirpsg = Carbon::parse($data->tgl_lahir_pasangan)->format('Y');
+
+    $pdf = PDF::loadView('report.sukettidakmemilikiketurunan', [
+      'data' => $data, 'hari' => $hari, 'bulan' => $bulan, 'tanggal' => $tanggal, 'tahun' => $tahun,
+      'bulanlahir' => $bulanlahir, 'tanggallahir' => $tanggallahir, 'tahunlahir' => $tahunlahir,
+      'bulanlahirpsg' => $bulanlahirpsg, 'tanggallahirpsg' => $tanggallahirpsg, 'tahunlahirpsg' => $tahunlahirpsg
     ]);
 
     return $pdf->stream('Surat Keterangan Tidak Mampu' . ' ' . '.pdf');
