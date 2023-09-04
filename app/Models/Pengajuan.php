@@ -18,6 +18,7 @@ class Pengajuan extends Model
     'status',
     'penduduk_id_atas_nama',
     'tujuan_permohonan',
+    'file_bukti',
     'created_at'
   ];
 

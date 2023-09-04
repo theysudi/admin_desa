@@ -30,6 +30,7 @@ use App\Models\SuketTidakMemilikiKeturunan;
 use App\Models\SuketTidakMemilikiTempatTinggal;
 use App\Models\SuketUsahaDagang;
 use App\Models\SuketYatimPiatu;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Database\QueryException;
@@ -155,16 +156,32 @@ class PengajuanController extends Controller
     })->toJson();
   }
 
+  private function storeFile($file, $prefix, $jenis_surat_id)
+  {
+    $timeStamp = Carbon::now()->timestamp;
+    $ext = $file->extension();
+    $directory = "/dokumen/" . $jenis_surat_id;
+    $namaFie =  $prefix . $timeStamp . ".{$ext}";
+    $file->move(storage_path('app/public' . $directory), $namaFie);
+    return 'storage' . $directory . '/' . $namaFie;
+  }
+
   public function store(Request $request)
   {
     try {
-      $penduduk_id = Auth::user()->userable_id;
-      Pengajuan::create([
+      $data = [
         'penduduk_id' => Auth::user()->userable_id,
         "jenis_surat_id" => $request->jenis_surat_id,
         "tujuan_permohonan" => $request->tujuan_permohonan,
         'penduduk_id_atas_nama' => $request->penduduk_id_atas_nama
-      ]);
+      ];
+
+      if ($request->jenis_surat_id == 20) {
+        $urlFile = $this->storeFile($request->file('file_bukti'), 'bukti', $request->jenis_surat_id);
+        $data['file_bukti'] = $urlFile;
+      }
+
+      Pengajuan::create($data);
 
       Alert::toast('Data Berhasil Disimpan', 'success');
     } catch (QueryException $e) {
