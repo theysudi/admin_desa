@@ -11,6 +11,7 @@ use App\Models\Pengajuan;
 use App\Models\SuketAhliWaris;
 use App\Models\SuketBelumKawin;
 use App\Models\SuketDataTercecer;
+use App\Models\SuketDomisili;
 use App\Models\SuketDomisiliAnakSekolah;
 use App\Models\SuketDomisiliPura;
 use App\Models\SuketDtks;
@@ -27,6 +28,8 @@ use App\Models\SuketTempatUsaha;
 use App\Models\SuketTidakMampu;
 use App\Models\SuketTidakMemilikiKeturunan;
 use App\Models\SuketTidakMemilikiTempatTinggal;
+use App\Models\SuketUsahaDagang;
+use App\Models\SuketYatimPiatu;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Database\QueryException;
@@ -141,6 +144,12 @@ class PengajuanController extends Controller
           return '<a href="' . route('report.sukettidakmemilikitempattinggal', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
         } elseif ($d->jenis_surat_id == 19) {
           return '<a href="' . route('report.sukettidakmemilikiketurunan', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 20) {
+          return '<a href="' . route('report.suketusahadagang', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 21) {
+          return '<a href="' . route('report.suketyatimpiatu', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 22) {
+          return '<a href="' . route('report.suketdomisili', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
         }
       }
     })->toJson();
@@ -208,6 +217,12 @@ class PengajuanController extends Controller
       return view('masterpengajuan.sukettidakmemilikitempattinggal',  ['data' => $data]);
     } elseif ($data->jenis_surat_id == 19) {
       return view('masterpengajuan.sukettidakmemilikiketurunan',  ['data' => $data]);
+    } elseif ($data->jenis_surat_id == 20) {
+      return view('masterpengajuan.suketusahadagang',  ['data' => $data]);
+    } elseif ($data->jenis_surat_id == 21) {
+      return view('masterpengajuan.suketyatimpiatu',  ['data' => $data]);
+    } elseif ($data->jenis_surat_id == 22) {
+      return view('masterpengajuan.suketdomisili',  ['data' => $data]);
     }
   }
 
@@ -907,6 +922,117 @@ class PengajuanController extends Controller
         "jenis_kelamin_pasangan" => $request->jenis_kelamin_pasangan,
         "agama_pasangan" => $request->agama_pasangan,
         "alamat_pasangan" => $request->alamat_pasangan,
+        "deskripsi" => $request->deskripsi,
+        "pengajuan_id" => $request->id,
+        "penduduk_id" => $request->penduduk_id
+      ]);
+
+      Alert::toast('Data Berhasil Disimpan', 'success');
+    } catch (QueryException $e) {
+      Alert::toast('Data Gagal Disimpan' . ' ' . $e->errorInfo[2], 'error');
+    }
+    return redirect()->route('masterpengajuan.home');
+  }
+
+  // MILIK USAHA DAGANG
+  public function suketusahadagang($id)
+  {
+    $data = Pengajuan::with('jenis_surat', 'penduduk')->where('id', $id)->first();
+    return view('masterpengajuan.suketusahadagang',  ['data' => $data]);
+  }
+
+  public function storesuketusahadagang(Request $request)
+  {
+    try {
+      Pengajuan::where('id', $request->id)->update([
+        "status" => 1
+      ]);
+      SuketUsahaDagang::where('pengajuan_id', $request->id)->delete();
+      SuketUsahaDagang::create([
+        "nomor_surat" => $request->nomor_surat,
+        "tanggal_surat" => $request->tanggal_surat,
+        "nama" => $request->nama,
+        "tempat_lahir" => $request->tempat_lahir,
+        "tgl_lahir" => $request->tgl_lahir,
+        "jenis_kelamin" => $request->jenis_kelamin,
+        "pekerjaan" => $request->pekerjaan,
+        "agama" => $request->agama,
+        "status_kawin" => $request->status_kawin,
+        "alamat" => $request->alamat,
+        "deskripsi" => $request->deskripsi,
+        "pengajuan_id" => $request->id,
+        "penduduk_id" => $request->penduduk_id
+      ]);
+
+      Alert::toast('Data Berhasil Disimpan', 'success');
+    } catch (QueryException $e) {
+      Alert::toast('Data Gagal Disimpan' . ' ' . $e->errorInfo[2], 'error');
+    }
+    return redirect()->route('masterpengajuan.home');
+  }
+
+  // MILIK SUKET YATIM PIATU
+  public function suketyatimpiatu($id)
+  {
+    $data = Pengajuan::with('jenis_surat', 'penduduk')->where('id', $id)->first();
+    return view('masterpengajuan.suketyatimpiatu',  ['data' => $data]);
+  }
+
+  public function storesuketyatimpiatu(Request $request)
+  {
+    try {
+      Pengajuan::where('id', $request->id)->update([
+        "status" => 1
+      ]);
+      SuketYatimPiatu::where('pengajuan_id', $request->id)->delete();
+      SuketYatimPiatu::create([
+        "nomor_surat" => $request->nomor_surat,
+        "tanggal_surat" => $request->tanggal_surat,
+        "nama" => $request->nama,
+        "tempat_lahir" => $request->tempat_lahir,
+        "tgl_lahir" => $request->tgl_lahir,
+        "jenis_kelamin" => $request->jenis_kelamin,
+        "pekerjaan" => $request->pekerjaan,
+        "agama" => $request->agama,
+        "status_kawin" => $request->status_kawin,
+        "alamat" => $request->alamat,
+        "deskripsi" => $request->deskripsi,
+        "pengajuan_id" => $request->id,
+        "penduduk_id" => $request->penduduk_id
+      ]);
+
+      Alert::toast('Data Berhasil Disimpan', 'success');
+    } catch (QueryException $e) {
+      Alert::toast('Data Gagal Disimpan' . ' ' . $e->errorInfo[2], 'error');
+    }
+    return redirect()->route('masterpengajuan.home');
+  }
+
+  // MILIK SUKET DOMISILI
+  public function suketdomisili($id)
+  {
+    $data = Pengajuan::with('jenis_surat', 'penduduk')->where('id', $id)->first();
+    return view('masterpengajuan.suketdomisili',  ['data' => $data]);
+  }
+
+  public function storesuketdomisili(Request $request)
+  {
+    try {
+      Pengajuan::where('id', $request->id)->update([
+        "status" => 1
+      ]);
+      SuketDomisili::where('pengajuan_id', $request->id)->delete();
+      SuketDomisili::create([
+        "nomor_surat" => $request->nomor_surat,
+        "tanggal_surat" => $request->tanggal_surat,
+        "nama" => $request->nama,
+        "tempat_lahir" => $request->tempat_lahir,
+        "tgl_lahir" => $request->tgl_lahir,
+        "jenis_kelamin" => $request->jenis_kelamin,
+        "pekerjaan" => $request->pekerjaan,
+        "agama" => $request->agama,
+        "status_kawin" => $request->status_kawin,
+        "alamat" => $request->alamat,
         "deskripsi" => $request->deskripsi,
         "pengajuan_id" => $request->id,
         "penduduk_id" => $request->penduduk_id

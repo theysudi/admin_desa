@@ -109,4 +109,16 @@ class Pengajuan extends Model
   {
     return $this->belongsTo(SuketTidakMemilikiKeturunan::class, 'pengajuan_id', 'id');
   }
+  public function suketusahadagang(): BelongsTo
+  {
+    return $this->belongsTo(SuketUsahaDagang::class, 'pengajuan_id', 'id');
+  }
+  public function suketyatimpiatu(): BelongsTo
+  {
+    return $this->belongsTo(SuketYatimPiatu::class, 'pengajuan_id', 'id');
+  }
+  public function suketdomisili(): BelongsTo
+  {
+    return $this->belongsTo(SuketDomisili::class, 'pengajuan_id', 'id');
+  }
 }

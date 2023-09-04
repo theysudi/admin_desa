@@ -100,6 +100,12 @@ Route::middleware('auth:user')->group(function () {
         Route::post('/storesukettidakmemilikitempattinggal', 'PengajuanController@storesukettidakmemilikitempattinggal')->name('storesukettidakmemilikitempattinggal');
         Route::get('/sukettidakmemilikiketurunan/{id?}', 'PengajuanController@sukettidakmemilikiketurunan')->name('sukettidakmemilikiketurunan');
         Route::post('/storesukettidakmemilikiketurunan', 'PengajuanController@storesukettidakmemilikiketurunan')->name('storesukettidakmemilikiketurunan');
+        Route::get('/suketusahadagang/{id?}', 'PengajuanController@suketusahadagang')->name('suketusahadagang');
+        Route::post('/storesuketusahadagang', 'PengajuanController@storesuketusahadagang')->name('storesuketusahadagang');
+        Route::get('/suketyatimpiatu/{id?}', 'PengajuanController@suketyatimpiatu')->name('suketyatimpiatu');
+        Route::post('/storesuketyatimpiatu', 'PengajuanController@storesuketyatimpiatu')->name('storesuketyatimpiatu');
+        Route::get('/suketdomisili/{id?}', 'PengajuanController@suketdomisili')->name('suketdomisili');
+        Route::post('/storesuketdomisili', 'PengajuanController@storesuketdomisili')->name('storesuketdomisili');
     });
 
     Route::middleware(['can:Report'])->prefix('report')->name('report.')->group(function () {
@@ -122,5 +128,8 @@ Route::middleware('auth:user')->group(function () {
         Route::get('/sukettidakmampu/{id}', 'ReportController@sukettidakmampu')->name('sukettidakmampu');
         Route::get('/sukettidakmemilikitempattinggal/{id}', 'ReportController@sukettidakmemilikitempattinggal')->name('sukettidakmemilikitempattinggal');
         Route::get('/sukettidakmemilikiketurunan/{id}', 'ReportController@sukettidakmemilikiketurunan')->name('sukettidakmemilikiketurunan');
+        Route::get('/suketusahadagang/{id}', 'ReportController@suketusahadagang')->name('suketusahadagang');
+        Route::get('/suketyatimpiatu/{id}', 'ReportController@suketyatimpiatu')->name('suketyatimpiatu');
+        Route::get('/suketdomisili/{id}', 'ReportController@suketdomisili')->name('suketdomisili');
     });
 });

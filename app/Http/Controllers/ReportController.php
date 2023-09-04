@@ -15,6 +15,7 @@ use App\Models\KonsultasiDokumen;
 use App\Models\SuketAhliWaris;
 use App\Models\SuketBelumKawin;
 use App\Models\SuketDataTercecer;
+use App\Models\SuketDomisili;
 use App\Models\SuketDomisiliAnakSekolah;
 use App\Models\SuketDomisiliPura;
 use App\Models\SuketDtks;
@@ -31,6 +32,8 @@ use App\Models\SuketTempatUsaha;
 use App\Models\SuketTidakMampu;
 use App\Models\SuketTidakMemilikiKeturunan;
 use App\Models\SuketTidakMemilikiTempatTinggal;
+use App\Models\SuketUsahaDagang;
+use App\Models\SuketYatimPiatu;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -417,5 +420,62 @@ class ReportController extends Controller
     ]);
 
     return $pdf->stream('Surat Keterangan Tidak Mampu' . ' ' . '.pdf');
+  }
+
+  public function suketusahadagang($id)
+  {
+    $setting = Setting::first();
+    $data = SuketUsahaDagang::where('pengajuan_id', $id)->first();
+    $hari = Carbon::parse($data->tanggal_surat)->locale('id')->isoFormat('dddd');
+    $bulan = Carbon::parse($data->tanggal_surat)->locale('id')->isoFormat('MMMM');
+    $tanggal = Carbon::parse($data->tanggal_surat)->format('d');
+    $tahun = Carbon::parse($data->tanggal_surat)->format('Y');
+    $bulanlahir = Carbon::parse($data->tgl_lahir)->locale('id')->isoFormat('MMMM');
+    $tanggallahir = Carbon::parse($data->tgl_lahir)->format('d');
+    $tahunlahir = Carbon::parse($data->tgl_lahir)->format('Y');
+
+    $pdf = PDF::loadView('report.suketusahadagang', [
+      'data' => $data, 'hari' => $hari, 'bulan' => $bulan, 'tanggal' => $tanggal, 'tahun' => $tahun, 'bulanlahir' => $bulanlahir, 'tanggallahir' => $tanggallahir, 'tahunlahir' => $tahunlahir
+    ]);
+
+    return $pdf->stream('Surat Keterangan Kelahiran' . ' ' . '.pdf');
+  }
+
+  public function suketyatimpiatu($id)
+  {
+    $setting = Setting::first();
+    $data = SuketYatimPiatu::where('pengajuan_id', $id)->first();
+    $hari = Carbon::parse($data->tanggal_surat)->locale('id')->isoFormat('dddd');
+    $bulan = Carbon::parse($data->tanggal_surat)->locale('id')->isoFormat('MMMM');
+    $tanggal = Carbon::parse($data->tanggal_surat)->format('d');
+    $tahun = Carbon::parse($data->tanggal_surat)->format('Y');
+    $bulanlahir = Carbon::parse($data->tgl_lahir)->locale('id')->isoFormat('MMMM');
+    $tanggallahir = Carbon::parse($data->tgl_lahir)->format('d');
+    $tahunlahir = Carbon::parse($data->tgl_lahir)->format('Y');
+
+    $pdf = PDF::loadView('report.suketyatimpiatu', [
+      'data' => $data, 'hari' => $hari, 'bulan' => $bulan, 'tanggal' => $tanggal, 'tahun' => $tahun, 'bulanlahir' => $bulanlahir, 'tanggallahir' => $tanggallahir, 'tahunlahir' => $tahunlahir
+    ]);
+
+    return $pdf->stream('Surat Keterangan Yatim Piatu' . ' ' . '.pdf');
+  }
+
+  public function suketdomisili($id)
+  {
+    $setting = Setting::first();
+    $data = SuketDomisili::where('pengajuan_id', $id)->first();
+    $hari = Carbon::parse($data->tanggal_surat)->locale('id')->isoFormat('dddd');
+    $bulan = Carbon::parse($data->tanggal_surat)->locale('id')->isoFormat('MMMM');
+    $tanggal = Carbon::parse($data->tanggal_surat)->format('d');
+    $tahun = Carbon::parse($data->tanggal_surat)->format('Y');
+    $bulanlahir = Carbon::parse($data->tgl_lahir)->locale('id')->isoFormat('MMMM');
+    $tanggallahir = Carbon::parse($data->tgl_lahir)->format('d');
+    $tahunlahir = Carbon::parse($data->tgl_lahir)->format('Y');
+
+    $pdf = PDF::loadView('report.suketdomisili', [
+      'data' => $data, 'hari' => $hari, 'bulan' => $bulan, 'tanggal' => $tanggal, 'tahun' => $tahun, 'bulanlahir' => $bulanlahir, 'tanggallahir' => $tanggallahir, 'tahunlahir' => $tahunlahir
+    ]);
+
+    return $pdf->stream('Surat Keterangan Domisili' . ' ' . '.pdf');
   }
 }
