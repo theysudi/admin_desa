@@ -62,7 +62,7 @@
                             <div class="form-group text-right">
                                 <hr>
                                 <button type="submit" class="btn btn-success" style="width: 100px;">
-                                    <i class="fa fa-check-circle"></i> Simpan
+                                    <i class="fa fa-check-circle"></i> Kirim
                                 </button>
                             </div>
                         </form>
