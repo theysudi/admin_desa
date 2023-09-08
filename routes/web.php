@@ -106,6 +106,9 @@ Route::middleware('auth:user')->group(function () {
         Route::post('/storesuketyatimpiatu', 'PengajuanController@storesuketyatimpiatu')->name('storesuketyatimpiatu');
         Route::get('/suketdomisili/{id?}', 'PengajuanController@suketdomisili')->name('suketdomisili');
         Route::post('/storesuketdomisili', 'PengajuanController@storesuketdomisili')->name('storesuketdomisili');
+        Route::get('/suketusahadagangkadus/{id?}', 'PengajuanController@suketusahadagangkadus')->name('suketusahadagangkadus');
+        Route::post('/storesuketusahadagangkadus', 'PengajuanController@storesuketusahadagangkadus')->name('storesuketusahadagangkadus');
+        Route::get('/setujui/{status?}/{id?}', 'PengajuanController@setujui')->name('setujui');
     });
 
     Route::middleware(['can:Report'])->prefix('report')->name('report.')->group(function () {

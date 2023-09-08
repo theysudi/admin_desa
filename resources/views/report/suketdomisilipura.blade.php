@@ -90,6 +90,13 @@
         </td>
     </tr>
 </table>
+<table align="right">
+    <tr>
+        <td style="padding-right:100px;">
+            <img src="assets/images/ttd-siguna.jpg" height="110px" align="right">
+        </td>
+    </tr>
+</table>
 
 </body>
 

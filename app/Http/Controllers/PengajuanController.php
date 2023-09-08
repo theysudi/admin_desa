@@ -29,6 +29,7 @@ use App\Models\SuketTidakMampu;
 use App\Models\SuketTidakMemilikiKeturunan;
 use App\Models\SuketTidakMemilikiTempatTinggal;
 use App\Models\SuketUsahaDagang;
+use App\Models\SuketUsahaDagangKadus;
 use App\Models\SuketYatimPiatu;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -76,33 +77,72 @@ class PengajuanController extends Controller
 
   public function datamasterpengajuan()
   {
-    $data = Pengajuan::with('jenis_surat', 'penduduk', 'atasnama')->get();
+    $role = Auth::user()->role_id;
+    $data = Pengajuan::with('jenis_surat', 'penduduk', 'atasnama')->where(function ($query) use ($role) {
+      if ($role == 5) {
+        $query->where('status', 1);
+      }
+      if ($role == 6) {
+        $query->where('status', 3);
+      }
+    })->get();
     // dd($data);
     return DataTables::of($data)->addColumn('statustext', function ($d) {
       if ($d->status == 0) {
         return 'Menunggu';
-      } else {
+      } elseif ($d->status == 1) {
+        return 'Di Proses ke Kepala Dusun';
+      } elseif ($d->status == 2 || $d->status == 3) {
+        return 'Di Proses ke Kepala Desa';
+      } elseif ($d->status == 4) {
         return 'Selesai';
       }
     })->addColumn('action', function ($d) {
 
-      return '<a href="' . route('masterpengajuan.prosessurat', $d->id) . '" class="btn btn-sm btn-primary"><i class="fa fa-pencil-alt"></i> Proses</a>';
+      if ($d->status == 0 || $d->status == 2) {
+        return '<a href="' . route('masterpengajuan.prosessurat', $d->id) . '" class="btn btn-sm btn-primary"><i class="fa fa-pencil-alt"></i> Proses</a>';
+      } elseif ($d->status == 1) {
+        return '<a href="' . route('masterpengajuan.setujui', [2, $d->id]) . '" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Setujui Sebagai Kadus</a>';
+      } elseif ($d->status == 3) {
+        return '<a href="' . route('masterpengajuan.setujui', [4, $d->id]) . '" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Setujui Sebagai Kades</a>';
+      } else {
+        return '';
+      }
     })->toJson();
   }
 
+  function setujui($status, $id_pengajuan)
+  {
+    try {
+      Pengajuan::where('id', $id_pengajuan)->update([
+        "status" => $status
+      ]);
+      Alert::toast('Data Berhasil Disimpan', 'success');
+    } catch (QueryException $e) {
+      Alert::toast('Data Gagal Disimpan' . ' ' . $e->errorInfo[2], 'error');
+    }
+    return redirect()->back();
+  }
+
+  // buat role baru
   public function data()
   {
     $id_penduduk = Auth::user()->userable_id;
     $data = Pengajuan::with('jenis_surat', 'atasnama')->where('penduduk_id', $id_penduduk)->get();
-    // dd($data);
+
+    // dd($role);
     return DataTables::of($data)->addColumn('statustext', function ($d) {
       if ($d->status == 0) {
         return 'Menunggu';
-      } else {
+      } elseif ($d->status == 1) {
+        return 'Di Proses ke Kepala Dusun';
+      } elseif ($d->status == 2 || $d->status == 3) {
+        return 'Di Proses ke Kepala Desa';
+      } elseif ($d->status == 4) {
         return 'Selesai';
       }
     })->addColumn('action', function ($d) {
-      if ($d->status == 0) {
+      if ($d->status != 4) {
         return '';
       } else {
 
@@ -235,7 +275,11 @@ class PengajuanController extends Controller
     } elseif ($data->jenis_surat_id == 19) {
       return view('masterpengajuan.sukettidakmemilikiketurunan',  ['data' => $data]);
     } elseif ($data->jenis_surat_id == 20) {
-      return view('masterpengajuan.suketusahadagang',  ['data' => $data]);
+      if ($data->status == 0) {
+        return view('masterpengajuan.suketusahadagangkadus',  ['data' => $data]);
+      } else {
+        return view('masterpengajuan.suketusahadagang',  ['data' => $data]);
+      }
     } elseif ($data->jenis_surat_id == 21) {
       return view('masterpengajuan.suketyatimpiatu',  ['data' => $data]);
     } elseif ($data->jenis_surat_id == 22) {
@@ -247,7 +291,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketBelumKawin::where('pengajuan_id', $request->id)->delete();
       SuketBelumKawin::create([
@@ -284,7 +328,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketAhliWaris::where('pengajuan_id', $request->id)->delete();
       SuketAhliWaris::create([
@@ -320,7 +364,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketDomisiliAnakSekolah::where('pengajuan_id', $request->id)->delete();
       SuketDomisiliAnakSekolah::create([
@@ -363,7 +407,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketDomisiliPura::where('pengajuan_id', $request->id)->delete();
       SuketDomisiliPura::create([
@@ -394,7 +438,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketDtks::where('pengajuan_id', $request->id)->delete();
       SuketDtks::create([
@@ -429,7 +473,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketJandaDuda::where('pengajuan_id', $request->id)->delete();
       SuketJandaDuda::create([
@@ -467,7 +511,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketKelahiran::where('pengajuan_id', $request->id)->delete();
       SuketKelahiran::create([
@@ -504,7 +548,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketLetakTanah::where('pengajuan_id', $request->id)->delete();
       SuketLetakTanah::create([
@@ -539,7 +583,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketMenempatiTanah::where('pengajuan_id', $request->id)->delete();
       SuketMenempatiTanah::create([
@@ -577,7 +621,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketMenikah::where('pengajuan_id', $request->id)->delete();
       SuketMenikah::create([
@@ -618,7 +662,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketMeninggal::where('pengajuan_id', $request->id)->delete();
       SuketMeninggal::create([
@@ -654,7 +698,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketNamaAlias::where('pengajuan_id', $request->id)->delete();
       SuketNamaAlias::create([
@@ -696,7 +740,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketPindahDomisili::where('pengajuan_id', $request->id)->delete();
       SuketPindahDomisili::create([
@@ -732,7 +776,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketSudahMampu::where('pengajuan_id', $request->id)->delete();
       SuketSudahMampu::create([
@@ -768,7 +812,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketTempatUsaha::where('pengajuan_id', $request->id)->delete();
       SuketTempatUsaha::create([
@@ -808,7 +852,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketDataTercecer::where('pengajuan_id', $request->id)->delete();
       SuketDataTercecer::create([
@@ -846,7 +890,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketTidakMampu::where('pengajuan_id', $request->id)->delete();
       SuketTidakMampu::create([
@@ -884,7 +928,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketTidakMemilikiTempatTinggal::where('pengajuan_id', $request->id)->delete();
       SuketTidakMemilikiTempatTinggal::create([
@@ -921,7 +965,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketTidakMemilikiKeturunan::where('pengajuan_id', $request->id)->delete();
       SuketTidakMemilikiKeturunan::create([
@@ -962,7 +1006,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketUsahaDagang::where('pengajuan_id', $request->id)->delete();
       SuketUsahaDagang::create([
@@ -988,6 +1032,47 @@ class PengajuanController extends Controller
     return redirect()->route('masterpengajuan.home');
   }
 
+  // MILIK USAHA DAGANG KADUS
+  public function suketusahadagangkadus($id)
+  {
+    $data = Pengajuan::with('jenis_surat', 'penduduk')->where('id', $id)->first();
+    return view('masterpengajuan.suketusahadagangkadus',  ['data' => $data]);
+  }
+
+  public function storesuketusahadagangkadus(Request $request)
+  {
+    try {
+      Pengajuan::where('id', $request->id)->update([
+        "status" => 1
+      ]);
+      SuketUsahaDagangKadus::where('pengajuan_id', $request->id)->delete();
+      SuketUsahaDagangKadus::create([
+        "nomor_surat" => $request->nomor_surat,
+        "tanggal_surat" => $request->tanggal_surat,
+        "nama_kadus"  => $request->nama_kadus,
+        "jabatan_kadus"  => $request->jabatan_kadus,
+        "alamat_kadus"  => $request->alamat_kadus,
+        "nama" => $request->nama,
+        "tempat_lahir" => $request->tempat_lahir,
+        "tgl_lahir" => $request->tgl_lahir,
+        "jenis_kelamin" => $request->jenis_kelamin,
+        "pekerjaan" => $request->pekerjaan,
+        "agama" => $request->agama,
+        "status_kawin" => $request->status_kawin,
+        "alamat" => $request->alamat,
+        "deskripsi" => $request->deskripsi,
+        "pengajuan_id" => $request->id,
+        "penduduk_id" => $request->penduduk_id
+
+      ]);
+
+      Alert::toast('Data Berhasil Disimpan', 'success');
+    } catch (QueryException $e) {
+      Alert::toast('Data Gagal Disimpan' . ' ' . $e->errorInfo[2], 'error');
+    }
+    return redirect()->route('masterpengajuan.home');
+  }
+
   // MILIK SUKET YATIM PIATU
   public function suketyatimpiatu($id)
   {
@@ -999,7 +1084,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketYatimPiatu::where('pengajuan_id', $request->id)->delete();
       SuketYatimPiatu::create([
@@ -1036,7 +1121,7 @@ class PengajuanController extends Controller
   {
     try {
       Pengajuan::where('id', $request->id)->update([
-        "status" => 1
+        "status" => 3
       ]);
       SuketDomisili::where('pengajuan_id', $request->id)->delete();
       SuketDomisili::create([

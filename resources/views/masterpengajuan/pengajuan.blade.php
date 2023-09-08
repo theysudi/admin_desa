@@ -105,14 +105,20 @@
                     }
                 ],
                 order: [
-                    [1, 'asc']
+                    [1, 'desc']
                 ],
                 oLanguage: {
                     sProcessing: "Memuat Data.."
                 },
                 fnCreatedRow: function(row, data, index) {
+                    if (data.status == 0) {
+                        $(row).addClass("bg-info");
+                    }
                     $('td', row).eq(0).html(index + 1);
                 },
+                // fnCreatedRow: function(row, data, index) {
+                //     $('td', row).eq(0).html(index + 1);
+                // },
             });
         });
         $(document).on('click', '.Hapus', function() {

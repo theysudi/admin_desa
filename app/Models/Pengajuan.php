@@ -122,4 +122,8 @@ class Pengajuan extends Model
   {
     return $this->belongsTo(SuketDomisili::class, 'pengajuan_id', 'id');
   }
+  public function suketusahadagangkadus(): BelongsTo
+  {
+    return $this->belongsTo(SuketUsahaDagangKadus::class, 'pengajuan_id', 'id');
+  }
 }
