@@ -112,7 +112,7 @@
                 },
                 fnCreatedRow: function(row, data, index) {
                     if (data.status == 0) {
-                        $(row).addClass("bg-info");
+                        $(row).addClass("bg-success");
                     }
                     $('td', row).eq(0).html(index + 1);
                 },
