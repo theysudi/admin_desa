@@ -1,0 +1,36 @@
+@host = http://siguna.test/api
+@token = 0546e6bb5d26092778f46f9c5befd17a
+#std PNS
+@nip = 198510242004122001
+#SHIFT
+@nip = 198108302008032001
+
+
+GET {{host}}/ HTTP/1.1
+Accept: application/json
+
+### Login
+POST {{host}}/login HTTP/1.1
+# Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+username=admin
+&password=password
+
+### Scan Masuk
+POST {{host}}/rekam_kehadiran/1 HTTP/1.1
+X-Authorization: {{token}}
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+nip={{nip}}
+&tanggal_jam=1996-03-01 07:30:00
+
+### Scan Keluar
+POST {{host}}/rekam_kehadiran/2 HTTP/1.1
+X-Authorization: {{token}}
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+nip={{nip}}
+&tanggal_jam=1996-03-01 15:30:00
