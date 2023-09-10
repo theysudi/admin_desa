@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AccessToken extends Model
 {
-	protected $primaryKey = null;
 	public $incrementing = false;
+	protected $primaryKey = 'id';
 	protected $table = 'access_token';
 	protected $fillable = [
 		'id',
@@ -18,4 +18,9 @@ class AccessToken extends Model
 		'expired_at',
 		'device',
 	];
+
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'user_id');
+	}
 }

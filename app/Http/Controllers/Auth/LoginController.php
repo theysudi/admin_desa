@@ -53,10 +53,9 @@ class LoginController extends Controller
 		]);
 		if (auth()->guard('user')->attempt($request->only('username', 'password'))) {
 
-			dd($request);
 			$request->session()->regenerate();
 			$this->clearLoginAttempts($request);
-			// return redirect()->route('dashboard');
+			return redirect()->route('dashboard');
 		} else {
 			$this->incrementLoginAttempts($request);
 			// return redirect()
@@ -78,23 +77,39 @@ class LoginController extends Controller
 		]);
 
 		if ($validator->fails()) {
-			return response(['message' => $validator->errors()->all()[0]], 422);
+			return response(['msg' => $validator->errors()->all()[0]], 422);
 		}
 
 		$login = auth()->attempt($request->only('username', 'password'));
 		if ($login) {
 			$user = Auth::user();
-			$token = AccessToken::create([
-				'id' => Str::random(48),
-				'aplikasi_id' => 2,
-				'user_id' => $user->id,
-				'device' => $request->header('User-Agent'),
-				'expired_at' => Carbon::now()->addMonths(3),
-			]);
-			return response(['token' => $token, 'user' => $user], 200);
+
+			if (in_array($user->role_id, [3, 5, 6])) {
+				$token = Str::random(32);
+				$user->penduduk;
+
+				AccessToken::create([
+					'id' => hash('sha256', $token),
+					'aplikasi_id' => 2,
+					'revoked' => 0,
+					'user_id' => $user->id,
+					'expired_at' => Carbon::now()->addMonths(3),
+					'device' => $request->header('User-Agent'),
+				]);
+				return response(['token' => $token, 'user' => $user], 200);
+			} else {
+				return response(["msg" => "User tidak memiliki Hak Akses pada Aplikasi"], 422);
+			}
 		} else {
 			$this->incrementLoginAttempts($request);
-			return response(["message" => "Username atau Password Salah"], 422);
+			return response(["msg" => "Username atau Password Salah"], 422);
 		}
+	}
+
+	public function doLogout()
+	{
+		$token = Auth::accessToken();
+		$token->update(['revoked' => 1]);
+		return response(["msg" => "Berhasil Logout"], 200);
 	}
 }
