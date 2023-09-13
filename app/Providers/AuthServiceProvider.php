@@ -6,7 +6,8 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Models\permission\Permission;
 use App\Models\User;
-
+use App\Services\Auth\VenGuard;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,11 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Auth::extend('venguard', function ($app, $name, array $config) {
+            return new VenGuard(Auth::createUserProvider($config['provider']), $this->app['request']);
+        });
+        
         $permissions = Permission::all();
 
         foreach ($permissions as $permission) {
