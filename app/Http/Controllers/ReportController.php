@@ -441,6 +441,15 @@ class ReportController extends Controller
     return $pdf->stream('Surat Keterangan Kelahiran' . ' ' . '.pdf');
   }
 
+  public function suketusahadagangkadus()
+  {
+    $setting = Setting::first();
+    $pdf = PDF::loadView('report.suketusahadagangkadus');
+
+    return $pdf->stream('Surat Keterangan Kelahiran' . ' ' . '.pdf');
+  }
+
+
   public function suketyatimpiatu($id)
   {
     $setting = Setting::first();

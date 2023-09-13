@@ -40,7 +40,35 @@ Route::middleware('auth:user')->group(function () {
             Route::get('/edit{id}', 'MasterPendudukController@edit')->name('edit');
             Route::post('/store', 'MasterPendudukController@store')->name('store');
         });
+        Route::middleware(['can:MasterPerangkatDesa'])->prefix('perangkatdesa')->name('perangkatdesa.')->group(function () {
+            Route::get('/', 'MasterPerangkatDesaController@index')->name('home');
+            Route::get('/data', 'MasterPerangkatDesaController@data')->name('data');
+            Route::get('/create', 'MasterPerangkatDesaController@create')->name('create');
+            Route::get('/edit{id}', 'MasterPerangkatDesaController@edit')->name('edit');
+            Route::post('/store', 'MasterPerangkatDesaController@store')->name('store');
+        });
     });
+
+
+    #  ADMIN LAYANAN KESEHATAN 
+    Route::middleware(['can:LayananKesehatan'])->prefix('layanankesehatan')->name('layanankesehatan.')->group(function () {
+        Route::get('/', 'LayananKesehatanController@index')->name('home');
+        Route::get('/data', 'LayananKesehatanController@data')->name('data');
+        Route::get('/create', 'LayananKesehatanController@create')->name('create');
+        Route::get('/edit{id}', 'LayananKesehatanController@edit')->name('edit');
+        Route::post('/store', 'LayananKesehatanController@store')->name('store');
+    });
+
+    #  ADMIN DESA CERDAS
+    Route::middleware(['can:DesaCerdas'])->prefix('desacerdas')->name('desacerdas.')->group(function () {
+        Route::get('/', 'DesaCerdasController@index')->name('home');
+        Route::get('/data', 'DesaCerdasController@data')->name('data');
+        Route::get('/create', 'DesaCerdasController@create')->name('create');
+        Route::get('/edit{id}', 'DesaCerdasController@edit')->name('edit');
+        Route::post('/store', 'DesaCerdasController@store')->name('store');
+    });
+
+
 
 
 
@@ -134,5 +162,7 @@ Route::middleware('auth:user')->group(function () {
         Route::get('/suketusahadagang/{id}', 'ReportController@suketusahadagang')->name('suketusahadagang');
         Route::get('/suketyatimpiatu/{id}', 'ReportController@suketyatimpiatu')->name('suketyatimpiatu');
         Route::get('/suketdomisili/{id}', 'ReportController@suketdomisili')->name('suketdomisili');
+
+        Route::get('/suketusahadagangkadus', 'ReportController@suketusahadagangkadus')->name('suketusahadagangkadus');
     });
 });

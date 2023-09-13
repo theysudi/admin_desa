@@ -38,4 +38,9 @@ class MasterPenduduk extends Model
   {
     return $this->hasMany(Pengajuan::class, 'penduduk_id', 'id');
   }
+
+  public function perangkatdesa(): HasMany
+  {
+    return $this->hasMany(MasterPerangkatDesa::class, 'penduduk_id', 'id');
+  }
 }

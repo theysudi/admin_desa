@@ -49,14 +49,49 @@
                             </li>
 
                         </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('masterdata.perangkatdesa.home') }}"
+                                    class="nav-link  {{ request()->segment(2) == 'ahli' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        Perangkat Desa
+                                    </p>
+                                </a>
+                            </li>
+
+                        </ul>
                     @endcan
+
 
                     @can('MasterPengajuan')
                     <li class="nav-item {{ request()->segment(1) == 'masterpengajuan' ? 'active' : '' }}">
                         <a href="{{ route('masterpengajuan.home') }}" class="nav-link ">
-                            <i class="nav-icon fas fa-home"></i>
+                            <i class="nav-icon fas fa-file"></i>
                             <p>
-                                Pengajuan
+                                Layanan Surat
+                            </p>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('DesaCerdas')
+                    <li class="nav-item {{ request()->segment(1) == 'desacerdas' ? 'active' : '' }}">
+                        <a href="{{ route('desacerdas.home') }}" class="nav-link ">
+                            <i class="nav-icon fas fa-file"></i>
+                            <p>
+                                Desa Cerdas
+                            </p>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('LayananKesehatan')
+                    <li class="nav-item {{ request()->segment(1) == 'layanankesehatan' ? 'active' : '' }}">
+                        <a href="{{ route('layanankesehatan.home') }}" class="nav-link ">
+                            <i class="nav-icon fas fa-hospital"></i>
+                            <p>
+                                Layanan Kesehatan
                             </p>
                         </a>
                     </li>
