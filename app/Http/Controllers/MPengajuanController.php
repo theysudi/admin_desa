@@ -8,7 +8,7 @@ use App\Models\Pengajuan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Yajra\DataTables\Facades\DataTables;
 
 class MPengajuanController extends Controller
@@ -87,6 +87,69 @@ class MPengajuanController extends Controller
 					return false;
 				}
 			})
+			->addColumn('dok_link_pemohon', function ($d) {
+				if ($d->jenis_surat_id == 20) {
+					return URL::to($d->file_bukti);;
+				} else {
+					return '';
+				}
+			})
+			->addColumn('dok_link_kadus', function ($d) {
+				if ($d->jenis_surat_id == 20) {
+					return route('report.suketusahadagangkadus', $d->id);
+				} else {
+					return '';
+				}
+			})
+			->addColumn('dok_link', function ($d) {
+				if ($d->jenis_surat_id == 1) {
+					return route('report.suketbelumkawin', $d->id);
+				} elseif ($d->jenis_surat_id == 2) {
+					return route('report.suketahliwaris', $d->id);
+				} elseif ($d->jenis_surat_id == 3) {
+					return route('report.suketdomisilianaksekolah', $d->id);
+				} elseif ($d->jenis_surat_id == 4) {
+					return route('report.suketdomisilipura', $d->id);
+				} elseif ($d->jenis_surat_id == 5) {
+					return route('report.suketdtks', $d->id);
+				} elseif ($d->jenis_surat_id == 6) {
+					return route('report.suketjandaduda', $d->id);
+				} elseif ($d->jenis_surat_id == 7) {
+					return route('report.suketkelahiran', $d->id);
+				} elseif ($d->jenis_surat_id == 8) {
+					return route('report.suketletaktanah', $d->id);
+				} elseif ($d->jenis_surat_id == 9) {
+					return route('report.suketmenempatitanah', $d->id);
+				} elseif ($d->jenis_surat_id == 10) {
+					return route('report.suketmenikah', $d->id);
+				} elseif ($d->jenis_surat_id == 11) {
+					return route('report.suketmeninggal', $d->id);
+				} elseif ($d->jenis_surat_id == 12) {
+					return route('report.suketnamaalias', $d->id);
+				} elseif ($d->jenis_surat_id == 13) {
+					return route('report.suketpindahdomisili', $d->id);
+				} elseif ($d->jenis_surat_id == 14) {
+					return route('report.suketsudahmampu', $d->id);
+				} elseif ($d->jenis_surat_id == 15) {
+					return route('report.sukettempatusaha', $d->id);
+				} elseif ($d->jenis_surat_id == 16) {
+					return route('report.suketdatatercecer', $d->id);
+				} elseif ($d->jenis_surat_id == 17) {
+					return route('report.sukettidakmampu', $d->id);
+				} elseif ($d->jenis_surat_id == 18) {
+					return route('report.sukettidakmemilikitempattinggal', $d->id);
+				} elseif ($d->jenis_surat_id == 19) {
+					return route('report.sukettidakmemilikiketurunan', $d->id);
+				} elseif ($d->jenis_surat_id == 20) {
+					return route('report.suketusahadagang', $d->id);
+				} elseif ($d->jenis_surat_id == 21) {
+					return route('report.suketyatimpiatu', $d->id);
+				} elseif ($d->jenis_surat_id == 22) {
+					return route('report.suketdomisili', $d->id);
+				} else {
+					return '';
+				}
+			})
 			->toJson();
 
 		return response(["data" => $data->original['data']], 200);
@@ -115,17 +178,21 @@ class MPengajuanController extends Controller
 		}
 	}
 
-	public function pengajuanVerif(Pengajuan $pengajuan)
+	public function pengajuanVerif(Pengajuan $pengajuan, Request $request)
 	{
 		$user = Auth::user();
 
 		if ($user->role_id == 5 || $user->role_id == 6) {
 			try {
 				$status = 0;
-				if ($user->role_id == 5) {
-					$status = 2;
-				} else if ($user->role_id == 6) {
-					$status = 4;
+				if (isset($request->status)) {
+					$status = $request->status;
+				} else {
+					if ($user->role_id == 5) {
+						$status = 2;
+					} else if ($user->role_id == 6) {
+						$status = 4;
+					}
 				}
 
 				$pengajuan->update(['status' => $status]);
