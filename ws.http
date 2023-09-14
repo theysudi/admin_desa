@@ -1,17 +1,19 @@
 @host = http://siguna.test/api
+# @host = http://194.233.90.213:8124/api	
+@host = http://siguna.site/public/api
 @token = 07jx2fq7yM0rRcokBhMDGrjzYTNvutoN
-@token = Bwo1NaqaaKTaW7Ip7v83IBFJq82LR3P3
-@penduduk = kades
+# @token = Bwo1NaqaaKTaW7Ip7v83IBFJq82LR3P3
+@uname = admin
 
 GET {{host}}/ HTTP/1.1
 Accept: application/json
 
 ### Login
-POST {{host}}/login HTTP/1.1
-Accept: application/json
+POST {{host}}/login/ HTTP/1.1
+# Accept: application/json
 Content-Type: application/x-www-form-urlencoded
 
-username={{penduduk}}
+username={{uname}}
 &password=password
 
 ### logout
@@ -34,7 +36,7 @@ GET {{host}}/md/keluarga HTTP/1.1
 Authorization: Bearer {{token}}
 Accept: application/json
 
-### pengajuan
+### pengajuan dt
 GET {{host}}/pengajuan/dt HTTP/1.1
 Authorization: Bearer {{token}}
 Accept: application/json
@@ -52,6 +54,9 @@ jenis_surat_id=20
 
 
 ### pengajuan verif
-PUT {{host}}/pengajuan/1/verif HTTP/1.1
+PUT {{host}}/pengajuan/27/verif HTTP/1.1
 Authorization: Bearer {{token}}
 Accept: application/json
+# Content-Type: application/x-www-form-urlencoded
+
+# status=66
