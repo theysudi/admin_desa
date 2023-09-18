@@ -75,6 +75,7 @@ class PengajuanController extends Controller
     return view('masterpengajuan.pengajuan');
   }
 
+  // untuk admin datatables
   public function datamasterpengajuan()
   {
     $role = Auth::user()->role_id;
@@ -105,6 +106,8 @@ class PengajuanController extends Controller
         return '<a href="' . route('masterpengajuan.setujui', [2, $d->id]) . '" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Setujui Sebagai Kadus</a>';
       } elseif ($d->status == 3) {
         return '<a href="' . route('masterpengajuan.setujui', [4, $d->id]) . '" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Setujui Sebagai Kades</a>';
+      } elseif ($d->status == 4) {
+        return '<a href="#" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
       } else {
         return '';
       }
