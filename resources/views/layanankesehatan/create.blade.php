@@ -30,11 +30,6 @@
                             @csrf
                             @method('POST')
                             <div class="form-group">
-                                <label>Hari</label>
-                                <input type="text" name="hari" id="hari" placeholder="Hari" class="form-control">
-                            </div>
-
-                            <div class="form-group">
                                 <label>Tanggal</label>
                                 <div class="input-group date" id="tanggal_sampai" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input"
@@ -46,7 +41,16 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label>Waktu Mulai</label>
+                                <input type="time" name="waktu_mulai" id="waktu_mulai" placeholder="Waktu_mulai"
+                                    class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Waktu Selesai</label>
+                                <input type="time" name="waktu_selesai" id="waktu_selesai" placeholder="Waktu_selesai"
+                                    class="form-control">
+                            </div>
                             <div class="form-group">
                                 <label>Kegiatan</label>
                                 <input type="text" name="kegiatan" id="kegiatan" placeholder="Kegiatan"
@@ -54,28 +58,14 @@
                             </div>
                             <div class="form-group">
                                 <label>Uraian</label>
-                                <input type="text" name="uraian" id="uraian" placeholder="Uraian"
-                                    class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Waktu</label>
-                                <input type="text" name="waktu" id="waktu" placeholder="Waktu"
-                                    class="form-control">
+                                <textarea id="uraian" name="uraian" rows="4" class="form-control">
+                                </textarea>
                             </div>
                             <div class="form-group">
                                 <label>Tempat</label>
                                 <input type="text" name="tempat" id="tempat" placeholder="Tempat"
                                     class="form-control">
                             </div>
-
-                            <div class="form-group">
-                                <label>Keterangan</label>
-                                <div class="form-group">
-                                    <textarea name="keterangan" class="form-control catatan" rows="3" placeholder="Keterangan...">
-                      </textarea>
-                                </div>
-                            </div>
-
                             <div class="form-group text-center">
                                 <hr>
                                 <a href="{{ route('masterdata.perangkatdesa.home') }}" class="btn btn-danger"

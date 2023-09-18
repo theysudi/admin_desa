@@ -14,13 +14,12 @@ class LayananKesehatan extends Model
   protected $table = 'm_posyandu';
   protected $fillable = [
     'id',
-    'hari',
     'tanggal',
     'kegiatan',
     'uraian',
-    'waktu',
+    'waktu_mulai',
+    'waktu_selesai',
     'tempat',
-    'keterangan',
     'created_at',
     'updated_at'
   ];

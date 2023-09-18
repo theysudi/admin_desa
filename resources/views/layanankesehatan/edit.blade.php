@@ -34,12 +34,6 @@
                                     class="form-control" placeholder="Nama">
                             </div>
                             <div class="form-group">
-                                <label>Hari</label>
-                                <input type="text" name="hari" id="hari" placeholder="Hari"
-                                    value="{{ $layanankesehatan->hari }}" class="form-control">
-                            </div>
-
-                            <div class="form-group">
                                 <label>Tanggal</label>
                                 <div class="input-group date" id="tanggal_sampai" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input"
@@ -52,6 +46,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label>Waktu Mulai</label>
+                                <input type="time" name="waktu_mulai" id="waktu_mulai"
+                                    value="{{ $layanankesehatan->waktu_mulai }}" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Waktu Selesai</label>
+                                <input type="time" name="waktu_selesai" id="waktu_selesai"
+                                    value="{{ $layanankesehatan->waktu_selesai }}" class="form-control">
+                            </div>
 
                             <div class="form-group">
                                 <label>Kegiatan</label>
@@ -60,29 +64,15 @@
                             </div>
                             <div class="form-group">
                                 <label>Uraian</label>
-                                <input type="text" name="uraian" id="uraian" placeholder="Uraian"
-                                    value="{{ $layanankesehatan->uraian }}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Waktu</label>
-                                <input type="text" name="waktu" id="waktu" placeholder="Waktu"
-                                    value="{{ $layanankesehatan->waktu }}" class="form-control">
+                                <textarea id="uraian" name="uraian" rows="4" class="form-control">
+                                  {{ $layanankesehatan->uraian }}
+                                </textarea>
                             </div>
                             <div class="form-group">
                                 <label>Tempat</label>
                                 <input type="text" name="tempat" id="tempat" placeholder="Tempat"
                                     value="{{ $layanankesehatan->tempat }}" class="form-control">
                             </div>
-
-                            <div class="form-group">
-                                <label>Keterangan</label>
-                                <div class="form-group">
-                                    <textarea name="keterangan" value="{{ $layanankesehatan->keterangan }}" class="form-control catatan" rows="3"
-                                        placeholder="Keterangan...">
-                      </textarea>
-                                </div>
-                            </div>
-
                             <div class="form-group text-center">
                                 <hr>
                                 <a href="{{ route('layanankesehatan.home') }}" class="btn btn-danger" style="width: 100px;">

@@ -32,13 +32,12 @@
                             <thead>
                                 <tr>
                                     <th width="30" class="text-center">No</th>
-                                    <th>Hari</th>
                                     <th>Tanggal</th>
+                                    <th>Waktu Mulai</th>
+                                    <th>Waktu Selesai</th>
                                     <th>Kegiatan</th>
-                                    <th>Uraian</th>
-                                    <th>Waktu</th>
                                     <th>Tempat</th>
-                                    <th>Keterangan</th>
+                                    <th>Uraian</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -74,32 +73,29 @@
                         orderable: false
                     },
                     {
-                        data: 'hari',
-                        name: 'hari'
-                    },
-                    {
                         data: 'tanggal',
                         name: 'tanggal'
+                    },
+                    {
+                        data: 'waktu_mulai',
+                        name: 'waktu_mulai'
+                    },
+
+                    {
+                        data: 'waktu_selesai',
+                        name: 'waktu_selesai'
                     },
                     {
                         data: 'kegiatan',
                         name: 'kegiatan'
                     },
                     {
-                        data: 'uraian',
-                        name: 'uraian'
-                    },
-                    {
-                        data: 'waktu',
-                        name: 'waktu'
-                    },
-                    {
                         data: 'tempat',
                         name: 'tempat'
                     },
                     {
-                        data: 'keterangan',
-                        name: 'keterangan'
+                        data: 'uraian',
+                        name: 'uraian'
                     },
                     {
                         data: 'action',

@@ -33,6 +33,7 @@
                                 <tr>
                                     <th width="30" class="text-center">No</th>
                                     <th>Nama</th>
+                                    <th>Jenis</th>
                                     <th>Keterangan</th>
                                     <th>Action</th>
                                 </tr>
@@ -71,6 +72,10 @@
                     {
                         data: 'nama',
                         name: 'nama'
+                    },
+                    {
+                        data: 'jenis',
+                        name: 'jenis'
                     },
                     {
                         data: 'keterangan',

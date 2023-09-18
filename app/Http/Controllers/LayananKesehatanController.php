@@ -66,24 +66,22 @@ class LayananKesehatanController extends Controller
           ]);
         } else {
           LayananKesehatan::where('id', $request->id)->update([
-            "hari" => $request->hari,
             "tanggal" => $request->tanggal,
             "kegiatan" => $request->kegiatan,
             "uraian" => $request->uraian,
-            "waktu" => $request->waktu,
+            "waktu_mulai" => $request->waktu_mulai,
+            "waktu_selesai" => $request->waktu_selesai,
             "tempat" => $request->tempat,
-            "keterangan" => $request->keterangan,
           ]);
         }
       } else {
         $id = LayananKesehatan::create([
-          "hari" => $request->hari,
           "tanggal" => $request->tanggal,
           "kegiatan" => $request->kegiatan,
           "uraian" => $request->uraian,
-          "waktu" => $request->waktu,
+          "waktu_mulai" => $request->waktu_mulai,
+          "waktu_selesai" => $request->waktu_selesai,
           "tempat" => $request->tempat,
-          "keterangan" => $request->keterangan,
         ]);
       }
       Alert::toast('Data Berhasil Disimpan', 'success');

@@ -34,9 +34,17 @@
                                 <input type="text" name="nama" id="nama" placeholder="Nama" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label>Jenis</label>
-                                <input type="text" name="jenis" id="jenis" placeholder="Jenis"
-                                    class="form-control">
+                                <table style="width:100%">
+                                    <label>Jenis</label>
+                                    <tr>
+                                        <td> <input type="radio" id="jenis" name="jenis" value="Informasi">
+                                            <label for="html">Informasi</label><br>
+                                        </td>
+                                        <td><input type="radio" id="jenis" name="jenis" value="Awig-Awig">
+                                            <label for="css">Awig-Awig</label><br>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                             <div class="form-group">
                                 <label>Keterangan</label>

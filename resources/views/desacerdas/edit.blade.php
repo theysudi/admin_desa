@@ -40,6 +40,20 @@
                             </div>
 
                             <div class="form-group">
+                                <table style="width:100%">
+                                    <label>Jenis</label>
+                                    <tr>
+                                        <td> <input type="radio" id="jenis" name="jenis">
+                                            <label for="html">Informasi</label><br>
+                                        </td>
+                                        <td><input type="radio" id="jenis" name="jenis">
+                                            <label for="css">Awig-Awig</label><br>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Keterangan</label>
                                 <div class="form-group">
                                     <textarea name="keterangan" value="{{ $desacerdas->keterangan }}" class="form-control catatan" rows="3"
