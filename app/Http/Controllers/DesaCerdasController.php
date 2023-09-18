@@ -40,9 +40,10 @@ class DesaCerdasController extends Controller
 
   public function data()
   {
-    $data = DesaCerdas::all();
+    $data = DesaCerdas::where('isaktif', 1);
     return DataTables::of($data)->addColumn('action', function ($d) {
-      return '<a href="' . route('desacerdas.edit', $d->id) . '" class="btn btn-sm btn-warning"><i class="fa fa-pencil-alt"></i> Edit</a>';
+      return '<a href="' . route('desacerdas.edit', $d->id) . '" class="btn btn-sm btn-warning"><i class="fa fa-pencil-alt"></i> Edit</a>
+      <a style="cursor:pointer;" class="btn btn-xs btn-danger Hapus" ids=' . $d->id . '><i class="fa fa-trash-alt"></i> Hapus</a>';
     })->toJson();
   }
 
@@ -71,26 +72,28 @@ class DesaCerdasController extends Controller
   public function store(Request $request)
   {
     try {
+
+      if ($request->mode != 'del') {
+        $data = [
+          "nama" => $request->nama,
+          "keterangan" => $request->keterangan,
+          "jenis" => $request->jenis,
+        ];
+        if ($request->file) {
+          $urlFile = $this->storeFile($request->file('file'), 'desa_cerdas', $request->jenis);
+          $data['file'] = $urlFile;
+        }
+      }
       if ($request->id) {
         if ($request->mode == 'del') {
           DesaCerdas::where('id', $request->id)->update([
             "isaktif" => 0
           ]);
         } else {
-          DesaCerdas::where('id', $request->id)->update([
-            "nama" => $request->nama,
-            "keterangan" => $request->keterangan,
-            "file" => $request->file,
-            "jenis" => $request->jenis,
-          ]);
+          DesaCerdas::where('id', $request->id)->update($data);
         }
       } else {
-        $id = DesaCerdas::create([
-          "nama" => $request->nama,
-          "keterangan" => $request->keterangan,
-          "file" => $request->file,
-          "jenis" => $request->jenis,
-        ]);
+        $id = DesaCerdas::create($data);
       }
       Alert::toast('Data Berhasil Disimpan', 'success');
     } catch (QueryException $e) {

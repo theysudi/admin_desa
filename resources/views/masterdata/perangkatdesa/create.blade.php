@@ -40,17 +40,11 @@
                                     class="form-control">
                             </div>
                             <div class="form-group">
-                                <table style="width:100%">
-                                    <label>Jenis</label>
-                                    <tr>
-                                        <td> <input type="radio" id="jenis" name="jenis" value="Kepala Desa">
-                                            <label for="html">Kepala Desa</label><br>
-                                        </td>
-                                        <td><input type="radio" id="jenis" name="jenis" value="Kepala Dusun">
-                                            <label for="css">Kepala Dusun</label><br>
-                                        </td>
-                                    </tr>
-                                </table>
+                                <label>Jenis</label>
+                                <select name="jenis" id="jenis" class="form-control" style="width: 100%;">
+                                    <option value="Kepala Desa">Kepala Desa</option>
+                                    <option value="Kepala Dusun">Kepala Dusun</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Jabatan</label>

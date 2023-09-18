@@ -20,6 +20,7 @@ class LayananKesehatan extends Model
     'waktu_mulai',
     'waktu_selesai',
     'tempat',
+    'isaktif',
     'created_at',
     'updated_at'
   ];

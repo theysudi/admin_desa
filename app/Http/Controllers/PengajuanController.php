@@ -107,7 +107,52 @@ class PengajuanController extends Controller
       } elseif ($d->status == 3) {
         return '<a href="' . route('masterpengajuan.setujui', [4, $d->id]) . '" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Setujui Sebagai Kades</a>';
       } elseif ($d->status == 4) {
-        return '<a href="#" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        //Untuk Report
+        if ($d->jenis_surat_id == 1) {
+          return '<a href="' . route('report.suketbelumkawin', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 2) {
+          return '<a href="' . route('report.suketahliwaris', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 3) {
+          return '<a href="' . route('report.suketdomisilianaksekolah', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 4) {
+          return '<a href="' . route('report.suketdomisilipura', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 5) {
+          return '<a href="' . route('report.suketdtks', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 6) {
+          return '<a href="' . route('report.suketjandaduda', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 7) {
+          return '<a href="' . route('report.suketkelahiran', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 8) {
+          return '<a href="' . route('report.suketletaktanah', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 9) {
+          return '<a href="' . route('report.suketmenempatitanah', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 10) {
+          return '<a href="' . route('report.suketmenikah', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 11) {
+          return '<a href="' . route('report.suketmeninggal', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 12) {
+          return '<a href="' . route('report.suketnamaalias', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 13) {
+          return '<a href="' . route('report.suketpindahdomisili', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 14) {
+          return '<a href="' . route('report.suketsudahmampu', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 15) {
+          return '<a href="' . route('report.sukettempatusaha', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 16) {
+          return '<a href="' . route('report.suketdatatercecer', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 17) {
+          return '<a href="' . route('report.sukettidakmampu', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 18) {
+          return '<a href="' . route('report.sukettidakmemilikitempattinggal', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 19) {
+          return '<a href="' . route('report.sukettidakmemilikiketurunan', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 20) {
+          return '<a href="' . route('report.suketusahadagang', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 21) {
+          return '<a href="' . route('report.suketyatimpiatu', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        } elseif ($d->jenis_surat_id == 22) {
+          return '<a href="' . route('report.suketdomisili', $d->id) . '" class="btn btn-sm btn-default" target="_blank"><i class="fa fa-print"></i> Cetak</a>';
+        }
       } else {
         return '';
       }

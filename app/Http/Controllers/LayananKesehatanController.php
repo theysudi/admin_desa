@@ -38,9 +38,14 @@ class LayananKesehatanController extends Controller
 
   public function data()
   {
-    $data = LayananKesehatan::all();
+    //tambah hari caranya, buat kolom baru, terusan codingan di bawah add column
+    $data = LayananKesehatan::where('isaktif', 1);
     return DataTables::of($data)->addColumn('action', function ($d) {
-      return '<a href="' . route('layanankesehatan.edit', $d->id) . '" class="btn btn-sm btn-warning"><i class="fa fa-pencil-alt"></i> Edit</a>';
+      return '<a href="' . route('layanankesehatan.edit', $d->id) . '" class="btn btn-sm btn-warning"><i class="fa fa-pencil-alt"></i> Edit</a> <a style="cursor:pointer;" class="btn btn-xs btn-danger Hapus" ids=' . $d->id . '><i class="fa fa-trash-alt"></i> Hapus</a>';
+    })->addColumn('hari', function ($d) {
+      $hari = date("N", strtotime($d->tanggal));
+      $arr_hari = ['1' => 'Senin', '2' => 'Selasa', '3' => 'Rabu', '4' => 'Kamis', '5' => 'Jumat', '6' => 'Sabtu', '7' => 'Minggu'];
+      return $arr_hari[$hari];
     })->toJson();
   }
 

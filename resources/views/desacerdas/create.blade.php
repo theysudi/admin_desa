@@ -26,7 +26,8 @@
                         <h5>Tambahkan Informasi Baru</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('desacerdas.store') }}" method="post" autocomplete="off">
+                        <form action="{{ route('desacerdas.store') }}" method="post" autocomplete="off"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="form-group">
@@ -34,17 +35,11 @@
                                 <input type="text" name="nama" id="nama" placeholder="Nama" class="form-control">
                             </div>
                             <div class="form-group">
-                                <table style="width:100%">
-                                    <label>Jenis</label>
-                                    <tr>
-                                        <td> <input type="radio" id="jenis" name="jenis" value="Informasi">
-                                            <label for="html">Informasi</label><br>
-                                        </td>
-                                        <td><input type="radio" id="jenis" name="jenis" value="Awig-Awig">
-                                            <label for="css">Awig-Awig</label><br>
-                                        </td>
-                                    </tr>
-                                </table>
+                                <label>Jenis</label>
+                                <select name="jenis" id="jenis" class="form-control" style="width: 100%;">
+                                    <option value="Informasi">Informasi</option>
+                                    <option value="Awig-Awig">Awig-Awig</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Keterangan</label>
@@ -129,6 +124,7 @@
 
         $(function() {
             $('input[name=nilai]').formuang();
+            bsCustomFileInput.init();
         });
     </script>
 @endsection

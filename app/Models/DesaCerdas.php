@@ -17,6 +17,7 @@ class DesaCerdas extends Model
     'nama',
     'keterangan',
     'file',
+    'isaktif',
     'jenis',
     'created_at',
     'updated_at'

@@ -64,9 +64,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Uraian</label>
-                                <textarea id="uraian" name="uraian" rows="4" class="form-control">
-                                  {{ $layanankesehatan->uraian }}
-                                </textarea>
+                                <textarea id="uraian" name="uraian" rows="4" class="form-control">{{ $layanankesehatan->uraian }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label>Tempat</label>

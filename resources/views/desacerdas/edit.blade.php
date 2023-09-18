@@ -26,7 +26,8 @@
                         <h5>Ubah Data</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('desacerdas.store') }}" method="post" autocomplete="off">
+                        <form action="{{ route('desacerdas.store') }}" method="post" autocomplete="off"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="form-group">
@@ -38,27 +39,29 @@
                                 <input type="text" name="nama" id="nama" placeholder="nama"
                                     value="{{ $desacerdas->nama }}" class="form-control">
                             </div>
-
                             <div class="form-group">
-                                <table style="width:100%">
-                                    <label>Jenis</label>
-                                    <tr>
-                                        <td> <input type="radio" id="jenis" name="jenis">
-                                            <label for="html">Informasi</label><br>
-                                        </td>
-                                        <td><input type="radio" id="jenis" name="jenis">
-                                            <label for="css">Awig-Awig</label><br>
-                                        </td>
-                                    </tr>
-                                </table>
+                                <label>Jenis</label>
+                                <select name="jenis" id="jenis" class="form-control" value="{{ $desacerdas->jenis }}"
+                                    style="width: 100%;">
+                                    <option value="Informasi">Informasi</option>
+                                    <option value="Awig-Awig">Awig-Awig</option>
+                                </select>
                             </div>
-
                             <div class="form-group">
                                 <label>Keterangan</label>
                                 <div class="form-group">
-                                    <textarea name="keterangan" value="{{ $desacerdas->keterangan }}" class="form-control catatan" rows="3"
-                                        placeholder="Keterangan...">
-                      </textarea>
+                                    <textarea name="keterangan" class="form-control catatan" rows="3" placeholder="Keterangan...">{{ $desacerdas->keterangan }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputFile">File Upload</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="exampleInputFile"
+                                            name="file">
+                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -125,6 +128,7 @@
 
         $(function() {
             $('input[name=nilai]').formuang();
+            bsCustomFileInput.init();
         });
     </script>
 

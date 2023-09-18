@@ -32,6 +32,7 @@
                             <thead>
                                 <tr>
                                     <th width="30" class="text-center">No</th>
+                                    <th>Hari</th>
                                     <th>Tanggal</th>
                                     <th>Waktu Mulai</th>
                                     <th>Waktu Selesai</th>
@@ -71,6 +72,10 @@
                         name: 'id',
                         className: 'text-center',
                         orderable: false
+                    },
+                    {
+                        data: 'hari',
+                        name: 'hari'
                     },
                     {
                         data: 'tanggal',

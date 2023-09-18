@@ -58,8 +58,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Uraian</label>
-                                <textarea id="uraian" name="uraian" rows="4" class="form-control">
-                                </textarea>
+                                <textarea id="uraian" name="uraian" rows="4" class="form-control"></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Tempat</label>
