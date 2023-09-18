@@ -91,7 +91,7 @@
                     {{ getSetting()->nama_sistem }}
                 </td>
                 <td style="text-align: right; font-size:10px;">
-                    Cetak: {{ Str::limit(Auth::user()->name, 15, '...') }}-{{ date('d/m/Y') }}
+                    Dicetak tanggal - {{ date('d/m/Y') }}
                 </td>
             </tr>
         </table>

@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-
-
 Route::get('/', function () {
     // return redirect()->route('home','1');
     return redirect()->route('login');
@@ -138,31 +136,30 @@ Route::middleware('auth:user')->group(function () {
         Route::post('/storesuketusahadagangkadus', 'PengajuanController@storesuketusahadagangkadus')->name('storesuketusahadagangkadus');
         Route::get('/setujui/{status?}/{id?}', 'PengajuanController@setujui')->name('setujui');
     });
+});
 
-    Route::middleware(['can:Report'])->prefix('report')->name('report.')->group(function () {
-        Route::get('/suketbelumkawin/{id}', 'ReportController@suketbelumkawin')->name('suketbelumkawin');
-        Route::get('/suketahliwaris/{id}', 'ReportController@suketahliwaris')->name('suketahliwaris');
-        Route::get('/suketdomisilianaksekolah/{id}', 'ReportController@suketdomisilianaksekolah')->name('suketdomisilianaksekolah');
-        Route::get('/suketdomisilipura/{id}', 'ReportController@suketdomisilipura')->name('suketdomisilipura');
-        Route::get('/suketdtks/{id}', 'ReportController@suketdtks')->name('suketdtks');
-        Route::get('/suketjandaduda/{id}', 'ReportController@suketjandaduda')->name('suketjandaduda');
-        Route::get('/suketkelahiran/{id}', 'ReportController@suketkelahiran')->name('suketkelahiran');
-        Route::get('/suketletaktanah/{id}', 'ReportController@suketletaktanah')->name('suketletaktanah');
-        Route::get('/suketmenempatitanah/{id}', 'ReportController@suketmenempatitanah')->name('suketmenempatitanah');
-        Route::get('/suketmenikah/{id}', 'ReportController@suketmenikah')->name('suketmenikah');
-        Route::get('/suketmeninggal/{id}', 'ReportController@suketmeninggal')->name('suketmeninggal');
-        Route::get('/suketnamaalias/{id}', 'ReportController@suketnamaalias')->name('suketnamaalias');
-        Route::get('/suketpindahdomisili/{id}', 'ReportController@suketpindahdomisili')->name('suketpindahdomisili');
-        Route::get('/suketsudahmampu/{id}', 'ReportController@suketsudahmampu')->name('suketsudahmampu');
-        Route::get('/sukettempatusaha/{id}', 'ReportController@sukettempatusaha')->name('sukettempatusaha');
-        Route::get('/suketdatatercecer/{id}', 'ReportController@suketdatatercecer')->name('suketdatatercecer');
-        Route::get('/sukettidakmampu/{id}', 'ReportController@sukettidakmampu')->name('sukettidakmampu');
-        Route::get('/sukettidakmemilikitempattinggal/{id}', 'ReportController@sukettidakmemilikitempattinggal')->name('sukettidakmemilikitempattinggal');
-        Route::get('/sukettidakmemilikiketurunan/{id}', 'ReportController@sukettidakmemilikiketurunan')->name('sukettidakmemilikiketurunan');
-        Route::get('/suketusahadagang/{id}', 'ReportController@suketusahadagang')->name('suketusahadagang');
-        Route::get('/suketyatimpiatu/{id}', 'ReportController@suketyatimpiatu')->name('suketyatimpiatu');
-        Route::get('/suketdomisili/{id}', 'ReportController@suketdomisili')->name('suketdomisili');
-
-        Route::get('/suketusahadagangkadus', 'ReportController@suketusahadagangkadus')->name('suketusahadagangkadus');
-    });
+Route::prefix('report')->name('report.')->group(function () {
+	Route::get('/suketbelumkawin/{id}', 'ReportController@suketbelumkawin')->name('suketbelumkawin');
+	Route::get('/suketahliwaris/{id}', 'ReportController@suketahliwaris')->name('suketahliwaris');
+	Route::get('/suketdomisilianaksekolah/{id}', 'ReportController@suketdomisilianaksekolah')->name('suketdomisilianaksekolah');
+	Route::get('/suketdomisilipura/{id}', 'ReportController@suketdomisilipura')->name('suketdomisilipura');
+	Route::get('/suketdtks/{id}', 'ReportController@suketdtks')->name('suketdtks');
+	Route::get('/suketjandaduda/{id}', 'ReportController@suketjandaduda')->name('suketjandaduda');
+	Route::get('/suketkelahiran/{id}', 'ReportController@suketkelahiran')->name('suketkelahiran');
+	Route::get('/suketletaktanah/{id}', 'ReportController@suketletaktanah')->name('suketletaktanah');
+	Route::get('/suketmenempatitanah/{id}', 'ReportController@suketmenempatitanah')->name('suketmenempatitanah');
+	Route::get('/suketmenikah/{id}', 'ReportController@suketmenikah')->name('suketmenikah');
+	Route::get('/suketmeninggal/{id}', 'ReportController@suketmeninggal')->name('suketmeninggal');
+	Route::get('/suketnamaalias/{id}', 'ReportController@suketnamaalias')->name('suketnamaalias');
+	Route::get('/suketpindahdomisili/{id}', 'ReportController@suketpindahdomisili')->name('suketpindahdomisili');
+	Route::get('/suketsudahmampu/{id}', 'ReportController@suketsudahmampu')->name('suketsudahmampu');
+	Route::get('/sukettempatusaha/{id}', 'ReportController@sukettempatusaha')->name('sukettempatusaha');
+	Route::get('/suketdatatercecer/{id}', 'ReportController@suketdatatercecer')->name('suketdatatercecer');
+	Route::get('/sukettidakmampu/{id}', 'ReportController@sukettidakmampu')->name('sukettidakmampu');
+	Route::get('/sukettidakmemilikitempattinggal/{id}', 'ReportController@sukettidakmemilikitempattinggal')->name('sukettidakmemilikitempattinggal');
+	Route::get('/sukettidakmemilikiketurunan/{id}', 'ReportController@sukettidakmemilikiketurunan')->name('sukettidakmemilikiketurunan');
+	Route::get('/suketusahadagang/{id}', 'ReportController@suketusahadagang')->name('suketusahadagang');
+	Route::get('/suketyatimpiatu/{id}', 'ReportController@suketyatimpiatu')->name('suketyatimpiatu');
+	Route::get('/suketdomisili/{id}', 'ReportController@suketdomisili')->name('suketdomisili');
+	Route::get('/suketusahadagangkadus', 'ReportController@suketusahadagangkadus')->name('suketusahadagangkadus');
 });
