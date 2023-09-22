@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('/privacy-policy', 'HomeController@privacyPolicy');
+
 Route::get('/', function () {
 	// return redirect()->route('home','1');
 	return redirect()->route('login');
