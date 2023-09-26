@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DesaCerdas;
 use App\Models\JenisDokumen;
+use App\Models\LayananKesehatan;
 use App\Models\MasterPenduduk;
 use App\Models\Pengajuan;
 use Carbon\Carbon;
@@ -204,5 +206,30 @@ class MPengajuanController extends Controller
 		} else {
 			return response(["msg" => 'User tidak memiliki Hak Akses'], 456);
 		}
+	}
+
+	public function desaCerdas()
+	{
+		$result = DesaCerdas::where('isaktif', 1)
+			->orderBy('created_at', 'desc')
+			->take(25);
+		$data = DataTables::of($result)->toJson();
+		return response(["data" => $data->original['data']], 200);
+	}
+
+	public function lyKesehatan()
+	{
+		$arr_hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+
+		$result = LayananKesehatan::where('isaktif', 1)
+			->orderBy('tanggal', 'desc')
+			->take(25);
+		$data = DataTables::of($result)->addColumn('tanggal_format', function ($d) {
+			return Carbon::parse($d->tanggal)->format('d-m-Y');
+		})->addColumn('hari', function ($d) use ($arr_hari) {
+			$hari = date("N", strtotime($d->tanggal));
+			return $arr_hari[$hari];
+		})->toJson();
+		return response(["data" => $data->original['data']], 200);
 	}
 }
