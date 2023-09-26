@@ -30,7 +30,7 @@ Route::middleware(['auth:api'])->group(function () {
 		return ['user' => $request->user()];
 	});
 
-	
+
 	Route::controller(MPengajuanController::class)->group(function () {
 		Route::get('/md/jenis-dokumen', 'dokJenisMD');
 		Route::get('/md/keluarga', 'keluargaMD');
@@ -39,6 +39,14 @@ Route::middleware(['auth:api'])->group(function () {
 			Route::get('/dt', 'pengajuanDt');
 			Route::post('/', 'pengajuanStore');
 			Route::put('/{pengajuan}/verif', 'pengajuanVerif');
+		});
+
+		Route::prefix('/desa-cerdas')->group(function () {
+			Route::get('/dt', 'desaCerdas');
+		});
+
+		Route::prefix('/layanan-kesehatan')->group(function () {
+			Route::get('/dt', 'lyKesehatan');
 		});
 	});
 });

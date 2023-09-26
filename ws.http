@@ -1,6 +1,6 @@
 @host = http://siguna.test/api
 # @host = http://194.233.90.213:8124/api	
-@host = http://siguna.site/public/api
+# @host = http://siguna.site/public/api
 @token = 07jx2fq7yM0rRcokBhMDGrjzYTNvutoN
 # @token = Bwo1NaqaaKTaW7Ip7v83IBFJq82LR3P3
 @uname = admin
@@ -60,3 +60,15 @@ Accept: application/json
 # Content-Type: application/x-www-form-urlencoded
 
 # status=66
+
+
+
+### desa cerdas
+GET {{host}}/desa-cerdas/dt HTTP/1.1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### layanan kesehatan
+GET {{host}}/layanan-kesehatan/dt HTTP/1.1
+Authorization: Bearer {{token}}
+Accept: application/json
