@@ -214,9 +214,6 @@ class MPengajuanController extends Controller
 			->orderBy('created_at', 'desc')
 			->take(25);
 		$data = DataTables::of($result)
-			->addColumn('keterangan', function ($d) {
-				return nl2br($d->keterangan);
-			})
 			->addColumn('file', function ($d) {
 				return URL::to($d->file);
 			})
@@ -239,8 +236,6 @@ class MPengajuanController extends Controller
 		})->addColumn('hari', function ($d) use ($arr_hari) {
 			$hari = date("N", strtotime($d->tanggal));
 			return $arr_hari[$hari];
-		})->addColumn('uraian', function ($d) {
-			return nl2br($d->uraian);
 		})->toJson();
 		return response(["data" => $data->original['data']], 200);
 	}
