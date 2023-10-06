@@ -38,24 +38,29 @@ class ProfileController extends Controller
 
 	public function store(Request $request)
 	{
+		$conf = true;
 
-		if ($request->password_old == Auth::user()->password) {
+		if (Hash::make($request->password_old) == Auth::user()->password) {
 			Alert::toast('Konfirmasi Password Baru tidak Sama ', 'error');
+			$conf = false;
 		}
-		if ($request->password_new == $request->password_new_confirm) {
+		if ($conf && $request->password_new != $request->password_new_confirm) {
 			Alert::toast('Konfirmasi Password Baru tidak Sama ', 'error');
+			$conf = false;
 		}
 
-		try {
+		if ($conf) {
+			try {
+				User::find($request->id)->update([
+					'password' => Hash::make($request->password_new)
+				]);
 
-			User::find($request->id)->update([
-				'password' => Hash::make($request->password_new_confirm)
-			]);
-
-			Alert::toast('Data Berhasil Disimpan', 'success');
-		} catch (QueryException $e) {
-			Alert::toast('Data Gagal Disimpan' . ' ' . $e->errorInfo[2], 'error');
+				Alert::toast('Data Berhasil Disimpan', 'success');
+			} catch (QueryException $e) {
+				Alert::toast('Data Gagal Disimpan' . ' ' . $e->errorInfo[2], 'error');
+			}
 		}
-		return redirect()->route('penduduk.pengajuan.home');
+
+		return redirect()->route('profile.edit');
 	}
 }

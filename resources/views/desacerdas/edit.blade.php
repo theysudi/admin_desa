@@ -41,8 +41,8 @@
 							<div class="form-group">
 								<label>Jenis</label>
 								<select name="jenis" id="jenis" class="form-control" style="width: 100%;">
-									<option {{ ($desacerdas->jenis == 'Informasi') ? 'selected' : '' }} value="Informasi">Informasi</option>
-									<option {{ ($desacerdas->jenis == 'Awig-Awig') ? 'selected' : '' }} value="Awig-Awig">Awig-Awig</option>
+									<option {{ $desacerdas->jenis == 'Informasi' ? 'selected' : '' }} value="Informasi">Informasi</option>
+									<option {{ $desacerdas->jenis == 'Awig-Awig' ? 'selected' : '' }} value="Awig-Awig">Awig-Awig</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -54,9 +54,18 @@
 
 							<div class="form-group">
 								<label for="exampleInputFile">File Upload</label>
-								<div>
-									<a href="{{ url($desacerdas->file) }}" class="btn btn-primary" target="_blank">Lihat File</a>
-								</div>
+								@if ($desacerdas->file)
+									<div>
+										<a href="{{ url($desacerdas->file) }}" class="btn btn-primary" target="_blank">Lihat File</a>
+									</div>
+								@else
+									<div class="input-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input" id="exampleInputFile" name="file">
+											<label class="custom-file-label" for="exampleInputFile">Choose file</label>
+										</div>
+									</div>
+								@endif
 							</div>
 
 							<div class="form-group text-center">
@@ -85,44 +94,27 @@
 @section('js')
 
 	<script>
-		$('.catatan').summernote({
-			inheritPlaceholder: true,
-			toolbar: [
-				['style', ['style']],
-				['font', ['bold', 'underline', 'clear']],
-				['fontname', ['fontname']],
-				['color', ['color']],
-				['para', ['ul', 'ol', 'paragraph']],
-				['table', ['table']],
-				['insert', ['link']],
-				['view', ['fullscreen', 'codeview', 'help']],
-			]
-		});
-		$('#status').select2({
-			theme: 'bootstrap4',
-			placeholder: 'Pilih Status'
-		});
-	</script>
-	<script>
-		$('#status').select2({
-			theme: 'bootstrap4',
-			placeholder: 'Pilih Status'
-		});
-	</script>
-
-	<script>
-		$("#tanggal_sampai").datetimepicker({
-			format: 'yyyy-MM-DD',
-		});
-
-
-		script > $("#tanggal_dari").datetimepicker({
-			format: 'DD-MM-yyyy',
-		});
-
-		$(function() {
-			$('input[name=nilai]').formuang();
+		$(document).ready(function() {
 			bsCustomFileInput.init();
+
+			// $('.catatan').summernote({
+			// 	inheritPlaceholder: true,
+			// 	toolbar: [
+			// 		['style', ['style']],
+			// 		['font', ['bold', 'underline', 'clear']],
+			// 		['fontname', ['fontname']],
+			// 		['color', ['color']],
+			// 		['para', ['ul', 'ol', 'paragraph']],
+			// 		['table', ['table']],
+			// 		['insert', ['link']],
+			// 		['view', ['fullscreen', 'codeview', 'help']],
+			// 	]
+			// });
+
+			$('.s2').select2({
+				theme: 'bootstrap4',
+				placeholder: 'Pilih Jenis'
+			});
 		});
 	</script>
 

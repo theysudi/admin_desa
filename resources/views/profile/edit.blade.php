@@ -33,7 +33,7 @@
 							</div>
 							<div class="form-group">
 								<label>Username</label>
-								<input type="text" class="form-control" name="username" placeholder="Username" value="{{ $user->username }}">
+								<input type="text" class="form-control" placeholder="Username" value="{{ $user->username }}" disabled>
 							</div>
 							<div class="form-group">
 								<label>Password Lama</label>
@@ -45,12 +45,13 @@
 							</div>
 							<div class="form-group">
 								<label>Konfirmasi Password Baru</label>
-								<input type="password" class="form-control" name="password_new_confirm" placeholder="Konfirmasi Password Baru" value="">
+								<input type="password" class="form-control" name="password_new_confirm" placeholder="Konfirmasi Password Baru"
+									value="">
 							</div>
 
 							<div class="form-group text-center">
 								<hr>
-								<a href="{{ route('masterdata.penduduk.home') }}" class="btn btn-danger" style="width: 100px;">
+								<a href="{{ route('home') }}" class="btn btn-danger" style="width: 100px;">
 									<i class="fa fa-times-circle"></i> Batal
 								</a>
 								<button type="submit" class="btn btn-success" style="width: 100px;">
@@ -72,28 +73,5 @@
 @endsection
 
 @section('js')
-
-	<script>
-		$("#tanggal_dari").datetimepicker({
-			format: 'DD-MM-yyyy',
-		});
-		$("#tanggal_sampai").datetimepicker({
-			format: 'DD-MM-yyyy',
-		});
-	</script>
-
-	<script>
-		$('#status').select2({
-			theme: 'bootstrap4',
-			placeholder: 'Pilih Status'
-		});
-	</script>
-	<script>
-		$('#id_kecamatan').select2({
-			theme: 'bootstrap4',
-		});
-	</script>
-
-
-
+	<script></script>
 @endsection
