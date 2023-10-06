@@ -32,6 +32,11 @@ Route::middleware('auth:user')->group(function () {
 	Route::get('/homeahli', 'HomeController@homeAhli')->name('homeahli');
 	Route::get('/homeadmin', 'HomeController@home')->name('homeadmin');
 
+	Route::prefix('profile')->name('profile.')->group(function () {
+		Route::get('/', 'ProfileController@edit')->name('edit');
+		Route::post('/store', 'ProfileController@store')->name('store');
+	});
+
 	Route::middleware(['can:MasterData'])->prefix('masterdata')->name('masterdata.')->group(function () {
 		Route::middleware(['can:MasterPenduduk'])->prefix('penduduk')->name('penduduk.')->group(function () {
 			Route::get('/', 'MasterPendudukController@index')->name('home');

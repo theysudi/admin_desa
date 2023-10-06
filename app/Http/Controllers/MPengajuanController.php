@@ -91,7 +91,7 @@ class MPengajuanController extends Controller
 			})
 			->addColumn('dok_link_pemohon', function ($d) {
 				if ($d->jenis_surat_id == 20) {
-					return URL::to($d->file_bukti);;
+					return URL::to($d->file_bukti);
 				} else {
 					return '';
 				}
@@ -213,7 +213,17 @@ class MPengajuanController extends Controller
 		$result = DesaCerdas::where('isaktif', 1)
 			->orderBy('created_at', 'desc')
 			->take(25);
-		$data = DataTables::of($result)->toJson();
+		$data = DataTables::of($result)
+			->addColumn('keterangan', function ($d) {
+				return nl2br($d->keterangan);
+			})
+			->addColumn('file', function ($d) {
+				return URL::to($d->file);
+			})
+			->addColumn('dok_link_file', function ($d) {
+				return URL::to($d->file);
+			})
+			->toJson();
 		return response(["data" => $data->original['data']], 200);
 	}
 
@@ -229,6 +239,8 @@ class MPengajuanController extends Controller
 		})->addColumn('hari', function ($d) use ($arr_hari) {
 			$hari = date("N", strtotime($d->tanggal));
 			return $arr_hari[$hari];
+		})->addColumn('uraian', function ($d) {
+			return nl2br($d->uraian);
 		})->toJson();
 		return response(["data" => $data->original['data']], 200);
 	}
