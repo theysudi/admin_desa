@@ -52,6 +52,27 @@ Route::middleware('auth:user')->group(function () {
 			Route::get('/edit{id}', 'MasterPerangkatDesaController@edit')->name('edit');
 			Route::post('/store', 'MasterPerangkatDesaController@store')->name('store');
 		});
+
+		Route::controller(MasterData\BidangController::class)->prefix('bidang')->name('bidang.')->group(function () {
+			Route::get('/', 'index')->name('home');
+			Route::get('/dtB1', 'dtB1')->name('dtB1');
+			Route::get('/dtB2', 'dtB2')->name('dtB2');
+			Route::get('/dtB3', 'dtB3')->name('dtB3');
+			Route::get('/create', 'create')->name('create');
+			Route::post('/store', 'store')->name('store');
+			Route::get('/destroy', 'destroy')->name('destroy');
+		});
+
+		Route::controller(MasterData\RekController::class)->prefix('rek')->name('rek.')->group(function () {
+			Route::get('/', 'index')->name('home');
+			Route::get('/dtB1', 'dtB1')->name('dtB1');
+			Route::get('/dtB2', 'dtB2')->name('dtB2');
+			Route::get('/dtB3', 'dtB3')->name('dtB3');
+			Route::get('/dtB4', 'dtB4')->name('dtB4');
+			Route::get('/create', 'create')->name('create');
+			Route::post('/store', 'store')->name('store');
+			Route::get('/destroy', 'destroy')->name('destroy');
+		});
 	});
 
 	#  ADMIN LAYANAN KESEHATAN 
