@@ -278,6 +278,23 @@ class PengajuanController extends Controller
 		return redirect()->route('penduduk.pengajuan.home');
 	}
 
+	public function uploadTte(Request $request, Pengajuan $pengajuan)
+	{
+		try {
+			$urlFile = $this->storeFile($request->file('file_tte'), 'tte', date('Ym'));
+
+			if ($urlFile) {
+				$pengajuan->update(['file_tte' => $urlFile]);
+				Alert::toast('Dokumen TTE Berhasil Diupload', 'success');
+			}else{
+				Alert::toast('Dokumen TTE Gagal Diupload', 'error');
+			}
+		} catch (QueryException $e) {
+			Alert::toast('Dokumen TTE Gagal Diupload' . ' ' . $e->errorInfo[2], 'error');
+		}
+		return redirect()->route('masterpengajuan.home');
+	}
+
 	// milik suket belum kawin
 	public function prosessurat($id)
 	{

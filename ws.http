@@ -1,6 +1,6 @@
 @host = http://siguna.test/api
 # @host = http://194.233.90.213:8124/api	
-# @host = http://siguna.site/public/api
+@host = http://siguna.site/public/api
 @token = 07jx2fq7yM0rRcokBhMDGrjzYTNvutoN
 # @token = Bwo1NaqaaKTaW7Ip7v83IBFJq82LR3P3
 @uname = admin
@@ -72,3 +72,9 @@ Accept: application/json
 GET {{host}}/layanan-kesehatan/dt HTTP/1.1
 Authorization: Bearer {{token}}
 Accept: application/json
+
+### layanan kesehatan
+GET https://sads.instiki.ac.id/service/tp/sarana-ruangan/get-jadwal-ruang-kelas HTTP/1.1
+secret : 2i6eebi78a9e7cfa7dc9deaa795b7d8i958daco8doacio2f9e9oa696edi2fea9eei669e6f8e922b6fifde75d776a276i75b8e9ai67ic8e9827d7ebdo598ibedo
+Accept: application/json
+

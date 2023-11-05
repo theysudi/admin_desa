@@ -89,6 +89,7 @@ Route::middleware('auth:user')->group(function () {
 		Route::get('/', 'PengajuanController@masterpengajuan')->name('home');
 		Route::get('/datamasterpengajuan', 'PengajuanController@datamasterpengajuan')->name('datamasterpengajuan');
 		Route::get('/prosessurat/{id?}', 'PengajuanController@prosessurat')->name('prosessurat');
+		Route::put('/uploadtte/{pengajuan?}', 'PengajuanController@uploadTte')->name('uploadtte');
 		Route::post('/storepengajuan', 'PengajuanController@storepengajuan')->name('storepengajuan');
 		Route::get('/suketahliwaris/{id?}', 'PengajuanController@suketahliwaris')->name('suketahliwaris');
 		Route::post('/storesuketahliwaris', 'PengajuanController@storesuketahliwaris')->name('storesuketahliwaris');
