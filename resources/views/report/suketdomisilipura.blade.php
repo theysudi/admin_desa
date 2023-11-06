@@ -83,7 +83,7 @@
     </tr>
 </table>
 
-<table align="right">
+{{-- <table align="right">
     <tr>
         <td>
             <img src="assets/images/tandatangan.png" height="110px" align="right">
@@ -96,7 +96,7 @@
             <img src="assets/images/ttd-siguna.jpg" height="110px" align="right">
         </td>
     </tr>
-</table>
+</table> --}}
 
 </body>
 

@@ -42,6 +42,39 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" data-backdrop="static" id="modal-tte">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<form action="" id="form" method="POST" autocomplete="off" enctype="multipart/form-data">
+					@csrf
+					@method('PUT')
+					<div class="modal-header">
+						<h4 class="modal-title">Upload Dokumen TTE</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-12">
+								<div class="form-group">
+									<label>File Dokumen TTE</label>
+									<div class="input-group">
+										<input type="file" class="form-control" name="file_tte">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+						<button type="submit" class="btn btn-primary">Simpan</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 @endsection
 
 @section('css')
@@ -53,7 +86,7 @@
 @section('js')
 	<script>
 		$(document).ready(function() {
-			$('#table').DataTable({
+			let dTable = $('#table').DataTable({
 				responsive: true,
 				processing: true,
 				serverSide: true,
@@ -61,6 +94,10 @@
 					url: '{{ route('masterpengajuan.datamasterpengajuan') }}',
 					type: 'GET',
 				},
+				columnDefs: [{
+					defaultContent: "",
+					targets: "_all"
+				}],
 				columns: [{
 						data: 'id',
 						name: 'id',
@@ -95,13 +132,20 @@
 						data: 'atasnama.nama_lgkp',
 						name: 'atasnama.nama_lgkp'
 					},
-
 					{
 						data: 'status',
 						name: 'status',
 						className: 'text-center',
 						render: function(data, type, row) {
-							return row.action;
+							let act = row.action;
+							if (row.file_tte == null && data == 4) {
+								act +=
+									` <button class="btn btn-sm btn-primary upload-tte"><i class="fa fa-upload"></i> Upload</button>`;
+							} else if (row.file_tte != null && data == 4) {
+								act +=
+									` <a href="${row.file_tte}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Dokumen TTE</a>`;
+							}
+							return act;
 						}
 					}
 				],
@@ -121,7 +165,20 @@
 				//     $('td', row).eq(0).html(index + 1);
 				// },
 			});
+
+			$('#table').find('tbody').on('click', '.upload-tte', function() {
+				let data = dTable.row($(this).parents('tr')).data();
+
+				let modal = $('#modal-tte');
+				modal.find('#form').attr('action', '{{ route('masterpengajuan.uploadtte') }}/' + data.id);
+
+				modal.modal({
+					backdrop: 'static',
+					keyboard: false
+				});
+			})
 		});
+
 		$(document).on('click', '.Hapus', function() {
 			var id = $(this).attr("ids");
 			var nama = $(this).closest('tr').find('.nama').text()
