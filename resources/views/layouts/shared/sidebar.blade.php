@@ -112,6 +112,17 @@
 					</li>
 				@endcan
 
+				@can('Keuangan')
+					<li class="nav-item">
+						<a href="{{ route('keuangan.home') }}" class="nav-link {{ request()->segment(1) == 'keuangan' ? 'active' : '' }}">
+							<i class="nav-icon fas fa-coins"></i>
+							<p>
+								Keuangan
+							</p>
+						</a>
+					</li>
+				@endcan
+
 				@can('Penduduk')
 					<li class="nav-item {{ request()->segment(2) == 'pengajuan' ? 'menu-is-opening menu-open' : '' }}">
 						<a href="#" class="nav-link {{ request()->segment(2) == 'pengajuan' ? 'active' : '' }}">

@@ -180,7 +180,7 @@
 							`<button type="button" class="btn btn-sm btn-warning ubah""><i class="fas fa-pencil-alt"></i> Ubah</button> `;
 						button +=
 							`<button type="button" class="btn btn-sm btn-danger hapus""><i class="fas fa-trash"></i> Hapus</button> `;
-						return button
+						// return button
 					}
 				}],
 				order: [

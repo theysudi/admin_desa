@@ -84,6 +84,19 @@ Route::middleware('auth:user')->group(function () {
 		Route::post('/store', 'LayananKesehatanController@store')->name('store');
 	});
 
+	#  ADMIN KEUANGAN 
+	Route::controller(\KeuanganController::class)->middleware(['can:Keuangan'])->prefix('keuangan')->name('keuangan.')->group(function () {
+		Route::get('/', 'index')->name('home');
+		Route::get('/dt', 'dt')->name('dt');
+
+		Route::prefix('kelola')->name('kelola.')->group(function () {
+			Route::get('/', 'kelola')->name('home');
+			Route::get('/dt', 'kelolaDt')->name('dt');
+			Route::post('/store', 'kelolaStore')->name('store');
+			Route::get('/destroy', 'kelolaDestroy')->name('destroy');
+		});
+	});
+
 	#  ADMIN DESA CERDAS
 	Route::middleware(['can:DesaCerdas'])->prefix('desacerdas')->name('desacerdas.')->group(function () {
 		Route::get('/', 'DesaCerdasController@index')->name('home');
