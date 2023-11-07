@@ -130,7 +130,6 @@ class BidangController extends Controller
 
 	public function destroy(Request $request)
 	{
-
 		try {
 			$b = $request->b;
 			$kd = $request->kd;
