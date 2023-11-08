@@ -88,6 +88,9 @@ Route::middleware('auth:user')->group(function () {
 	Route::controller(\KeuanganController::class)->middleware(['can:Keuangan'])->prefix('keuangan')->name('keuangan.')->group(function () {
 		Route::get('/', 'index')->name('home');
 		Route::get('/dt', 'dt')->name('dt');
+		Route::get('/create', 'create')->name('create');
+		Route::post('/store', 'store')->name('store');
+		Route::get('/destroy', 'destroy')->name('destroy');
 
 		Route::prefix('kelola')->name('kelola.')->group(function () {
 			Route::get('/', 'kelola')->name('home');

@@ -31,16 +31,44 @@
 							style="width: 100%;">
 							<thead>
 								<tr>
-									<th width="30" class="text-center">No</th>
-									<th>Nama</th>
-									<th>Keterangan</th>
-									<th>Tgl. Input</th>
+									<th>Tahun Anggaran</th>
 									<th>Action</th>
 								</tr>
 							</thead>
 						</table>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" data-backdrop="static" id="modal-add">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<form action="" id="form" method="GET" autocomplete="off">
+					<div class="modal-header">
+						<h4 class="modal-title">Tambah Tahun Keuangan Desa</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-12">
+								<div class="form-group">
+									<label>Tahun</label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="tahun">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+						<button type="submit" class="btn btn-primary">Simpan</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -54,7 +82,6 @@
 
 			let $dataTable = $table.DataTable({
 				processing: true,
-				processing: true,
 				autoWidth: false,
 				ajax: '{{ route('keuangan.dt') }}',
 				columnDefs: [{
@@ -62,63 +89,41 @@
 					targets: "_all"
 				}],
 				columns: [{
-					data: "created_at",
-					name: "created_at",
-					className: 'text-center',
-					orderable: false
-				}, {
-					data: "nama",
-					name: "nama",
-				}, {
-					data: "keterangan",
-					name: "keterangan",
-				}, {
-					data: "created_at",
-					name: "created_at",
-					render: function(data, type, row) {
-						text = moment(data).format('DD-MM-YYYY');
-						return text;
-					}
+					data: "tahun",
+					name: "tahun"
 				}, {
 					data: null,
-					width: "250px",
+					width: "120px",
 					className: "text-center",
 					orderable: false,
 					searchable: false,
 					name: "action",
 					render: function(data, type, row) {
 						let button =
-							`<a type="button" class="btn btn-sm btn-primary" href="${row.file}" target="_blank"><i class="fas fa-eye"></i> Lihat File</a> `;
-						button +=
-							`<button type="button" class="btn btn-sm btn-warning ubah"><i class="fas fa-pencil-alt"></i> Ubah</button> `;
-						button +=
-							`<button type="button" class="btn btn-sm btn-danger hapus"><i class="fas fa-times"></i> Hapus</button> `;
+							`<button type="button" class="btn btn-sm btn-warning kelola"><i class="fas fa-sign-out-alt"></i> Kelola</button> `;
 						return button
 					}
 				}],
 				order: [
-					[0, "desc"]
+					[0, "asc"]
 				],
-				fnCreatedRow: function(row, data, index) {
-					$('td', row).eq(0).html(index + 1);
-				},
 			});
 
 			// UBAH
-			$table.find('tbody').on('click', '.ubah', function() {
+			$table.find('tbody').on('click', '.kelola', function() {
 				let d = $dataTable.row($(this).parents('tr')).data();
-				window.location.href = `{{ route('keuangan.create') }}?id=${d.id}`;
-			});
-
-			// Hapus
-			$table.find('tbody').on('click', '.hapus', function() {
-				let d = $dataTable.row($(this).parents('tr')).data();
-				window.location.href = `{{ route('keuangan.destroy') }}?id=${d.id}`;
+				window.location.href = `{{ route('keuangan.kelola.home') }}?tahun=${d.tahun}`;
 			});
 		});
 
 		$(document).on('click', '#add', function() {
-			window.location.href = `{{ route('keuangan.create') }}`;
+			let modal = $('#modal-add');
+			modal.find('#form').attr('action', '{{ route('keuangan.kelola.home') }}/');
+
+			modal.modal({
+				backdrop: 'static',
+				keyboard: false
+			});
 		});
 	</script>
 @endsection
