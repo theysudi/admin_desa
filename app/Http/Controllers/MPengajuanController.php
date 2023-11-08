@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DesaCerdas;
 use App\Models\JenisDokumen;
+use App\Models\Keuangan;
 use App\Models\LayananKesehatan;
 use App\Models\MasterPenduduk;
 use App\Models\Pengajuan;
@@ -152,6 +153,13 @@ class MPengajuanController extends Controller
 					return '';
 				}
 			})
+			->addColumn('dok_link_tte', function ($d) {
+				if (isset($d->file_tte)) {
+					return URL::to($d->file_tte);
+				} else {
+					return '';
+				}
+			})
 			->toJson();
 
 		return response(["data" => $data->original['data']], 200);
@@ -213,14 +221,11 @@ class MPengajuanController extends Controller
 		$result = DesaCerdas::where('isaktif', 1)
 			->orderBy('created_at', 'desc')
 			->take(25);
-		$data = DataTables::of($result)
-			->addColumn('file', function ($d) {
-				return URL::to($d->file);
-			})
-			->addColumn('dok_link_file', function ($d) {
-				return URL::to($d->file);
-			})
-			->toJson();
+		$data = DataTables::of($result)->addColumn('file', function ($d) {
+			return URL::to($d->file);
+		})->addColumn('dok_link_file', function ($d) {
+			return URL::to($d->file);
+		})->toJson();
 		return response(["data" => $data->original['data']], 200);
 	}
 
@@ -236,6 +241,19 @@ class MPengajuanController extends Controller
 		})->addColumn('hari', function ($d) use ($arr_hari) {
 			$hari = date("N", strtotime($d->tanggal));
 			return $arr_hari[$hari];
+		})->toJson();
+		return response(["data" => $data->original['data']], 200);
+	}
+
+	public function keuangan()
+	{
+		$result = Keuangan::where('isaktif', 1)
+			->orderBy('created_at', 'desc')
+			->take(25);
+		$data = DataTables::of($result)->addColumn('tanggal_format', function ($d) {
+			return Carbon::parse($d->created_at)->format('d-m-Y');
+		})->addColumn('dok_link_file', function ($d) {
+			return URL::to($d->file);
 		})->toJson();
 		return response(["data" => $data->original['data']], 200);
 	}

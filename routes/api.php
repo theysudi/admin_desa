@@ -48,5 +48,9 @@ Route::middleware(['auth:api'])->group(function () {
 		Route::prefix('/layanan-kesehatan')->group(function () {
 			Route::get('/dt', 'lyKesehatan');
 		});
+
+		Route::prefix('/keuangan')->group(function () {
+			Route::get('/dt', 'keuangan');
+		});
 	});
 });
