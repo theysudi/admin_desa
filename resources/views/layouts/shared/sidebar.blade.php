@@ -55,7 +55,7 @@
 								</a>
 							</li>
 						</ul>
-						<ul class="nav nav-treeview">
+						{{-- <ul class="nav nav-treeview">
 							<li class="nav-item">
 								<a href="{{ route('masterdata.bidang.home') }}"
 									class="nav-link  {{ request()->segment(2) == 'bidang' ? 'active' : '' }}">
@@ -65,8 +65,8 @@
 									</p>
 								</a>
 							</li>
-						</ul>
-						<ul class="nav nav-treeview">
+						</ul> --}}
+						{{-- <ul class="nav nav-treeview">
 							<li class="nav-item">
 								<a href="{{ route('masterdata.rek.home') }}"
 									class="nav-link  {{ request()->segment(2) == 'rek' ? 'active' : '' }}">
@@ -76,7 +76,7 @@
 									</p>
 								</a>
 							</li>
-						</ul>
+						</ul> --}}
 					@endcan
 
 					@can('MasterPengajuan')
