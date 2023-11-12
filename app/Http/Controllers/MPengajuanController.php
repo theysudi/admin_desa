@@ -105,7 +105,7 @@ class MPengajuanController extends Controller
 					return '';
 				}
 			})
-			->addColumn('dok_link', function ($d) {
+			->addColumn('dok_link_draft', function ($d) {
 				if ($d->jenis_surat_id == 1) {
 					return route('report.suketbelumkawin', $d->id);
 				} elseif ($d->jenis_surat_id == 2) {
@@ -154,7 +154,7 @@ class MPengajuanController extends Controller
 					return '';
 				}
 			})
-			->addColumn('dok_link_tte', function ($d) {
+			->addColumn('dok_link', function ($d) {
 				if (isset($d->file_tte)) {
 					return URL::to($d->file_tte);
 				} else {
