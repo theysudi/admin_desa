@@ -52,5 +52,9 @@ Route::middleware(['auth:api'])->group(function () {
 		Route::prefix('/keuangan')->group(function () {
 			Route::get('/dt', 'keuangan');
 		});
+
+		Route::prefix('/gambar')->group(function () {
+			Route::get('/dt', 'gambar');
+		});
 	});
 });

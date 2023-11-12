@@ -11,6 +11,7 @@ use App\Models\Pengajuan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -256,5 +257,13 @@ class MPengajuanController extends Controller
 			return URL::to($d->file);
 		})->toJson();
 		return response(["data" => $data->original['data']], 200);
+	}
+
+	public function gambar(Request $request)
+	{
+		$result = DB::table('gambar')
+			->where('jenis', $request->jenis)
+			->get();
+		return response(["data" => $result], 200);
 	}
 }

@@ -46,7 +46,7 @@ class KeuanganController extends Controller
 			];
 
 			if ($request->file) {
-				$urlFile = $this->storeFile($request->file('file'), 'keuangan', null);
+				$urlFile = $this->storeFile($request->file('file'), 'keuangan', 'keuangan');
 				$data['file'] = $urlFile;
 			}
 
