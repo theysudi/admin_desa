@@ -75,6 +75,8 @@ class MPengajuanController extends Controller
 					return 'Di Proses ke Kepala Dusun';
 				} elseif ($row->status == 2 || $row->status == 3) {
 					return 'Di Proses ke Kepala Desa';
+				} elseif ($row->status == 4 && isset($row->file_tte)) {
+					return 'Proses Tanda Tangan Elektronik';
 				} elseif ($row->status == 4) {
 					return 'Selesai';
 				} else {
